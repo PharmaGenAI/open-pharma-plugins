@@ -1,15 +1,18 @@
 # Campaign Studio
 
-Create campaign briefs, preflight exact approved-claims and brand-kit paths, validate every channel and rendered file, then export a content-addressed draft MLR review package.
+Create campaign briefs, validate exact approved-claims and brand-kit inputs, draft channel content,
+render assets, and export a content-addressed package for qualified MLR review.
 
-Campaign Studio 1.1 supports English (`en`) output for email, banner, and poster. It accepts claims as UTF-8 JSON and a brand kit as a directory; it does not extract approved claims from other formats. Every output remains a draft until qualified medical, legal, and regulatory review is complete.
+Campaign Studio supports English (`en`) email, banner, and poster output. Approved claims must be
+UTF-8 JSON, and a brand kit must be a directory with the documented files. The plugin does not
+extract approved claims from other formats.
 
-## Tools available
+## Tools
 
 | Tool | Purpose |
 |---|---|
 | `create_campaign_brief` | Create or update the campaign brief |
-| `get_campaign_status` | Read non-mutating workflow status, validation freshness, and the next required tool |
+| `get_campaign_status` | Read workflow status, validation freshness, and the next required tool |
 | `preflight_campaign_inputs` | Fail-closed validate and persist claims and brand-kit sources |
 | `retrieve_approved_claims` | Load approved claims from JSON; fixtures require `demo_mode=true` |
 | `retrieve_brand_components` | Load the logo, palette, typography, and legal content |
@@ -21,103 +24,152 @@ Campaign Studio 1.1 supports English (`en`) output for email, banner, and poster
 | `render_banner` | Render validated banner copy to SVG |
 | `render_poster` | Render validated poster copy to PDF |
 | `validate_rendered_assets` | Inspect and hash every rendered channel file |
-| `package_mlr_submission` | Assemble artifacts and a human-readable review summary |
-| `render_mlr_review` | Render the canonical Markdown and interactive HTML review |
+| `package_mlr_submission` | Assemble the compatibility MLR review package |
+| `render_mlr_review` | Render canonical Markdown and interactive HTML review files |
 | `export_mlr_package` | Export a deterministic manifest and content-addressed ZIP |
 
-## Install and configure
+For exact schemas, check the installed Skill or MCP tool list.
+
+## Install
+
+Register the marketplace once, then install the Skill and MCP server for your agent host. If the
+marketplace is already registered, skip its `add` command and refresh it before installing a newly
+released capability.
+
+The marketplace catalog pins this capability to its current immutable release tag.
+
+### Claude Code
 
 ```bash
-pip install "open-pharma-plugins[campaign-studio]"
+claude plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+claude plugin install open-pharma-plugins-campaign-studio@open-pharma-plugins
 ```
 
-`OPEN_PHARMA_CAMPAIGN_STORE_DIR` defaults to `~/.open-pharma-plugins/campaign-studio`. Runtime artifacts are private where POSIX permissions are available.
+### Codex
 
-## Production path-first prompt
+```bash
+codex plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+codex plugin marketplace upgrade open-pharma-plugins
+codex plugin add open-pharma-plugins-campaign-studio@open-pharma-plugins
+```
 
-Replace only the two absolute input paths and the campaign details. Preserve the paths exactly.
+### GitHub Copilot CLI
+
+```bash
+copilot plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+copilot plugin install open-pharma-plugins-campaign-studio@open-pharma-plugins
+```
+
+### Python MCP server only
+
+The Python distribution installs the server without the companion Skill:
+
+```bash
+python -m pip install "open-pharma-plugins[campaign-studio]"
+```
+
+The guided installer, local-checkout setup, and rollback instructions are in the shared
+[installation guide](../../docs/en/installation.md).
+
+## Configure
+
+`OPEN_PHARMA_CAMPAIGN_STORE_DIR` controls the private campaign store and defaults to
+`~/.open-pharma-plugins/campaign-studio`. Campaign Studio does not require an external provider key.
+
+Production work requires the absolute path to an approved-claims JSON file and the absolute path to
+a brand-kit directory. Bundled fictional inputs are available only when the operator explicitly
+selects `demo_mode=true`. An explicit invalid path never falls back to demo data.
+
+## Recommended workflow
+
+1. Define the country, policy jurisdiction, mode, brand, indication, audience, objective, KPI, CTA,
+   HTTPS CTA URL, requested channels, and exact input paths.
+2. Create the brief and preflight both inputs. Stop on any missing, malformed, excluded, or
+   inconsistent source.
+3. Build the audience journey, claim-linked message architecture, and structured copy for every
+   requested channel.
+4. Validate each channel's claims, fair balance, prohibited language, and required content.
+5. Render the email, banner, or poster only after the current validation fingerprint passes.
+6. Validate the actual rendered files, then render the canonical MLR review and export the
+   content-addressed package.
+7. Hand the draft to qualified medical, legal, and regulatory reviewers. Do not send or publish the
+   assets from this workflow.
+
+Preserve every supplied path exactly. Stop at the first failed gate rather than substituting copied,
+inferred, or bundled inputs.
+
+## Example requests
 
 ```text
-Create an English Campaign Studio draft for qualified MLR review.
-
-Approved claims JSON: /absolute/path/to/approved-claims.json
-Brand kit directory: /absolute/path/to/brand-kit
-Country: US
-Policy jurisdiction: FDA
-Mode: promotional
-Brand: ExampleBrand
-Indication: exact approved indication
-Audience: oncologists
-Objective: review the approved evidence
-KPI: qualified review completion
-CTA: Review the evidence
-CTA URL: https://example.test/evidence
-Channels: email, banner, poster
-Banner size: 300x250
-Poster size: A4
-
-Use demo_mode=false. Create the brief, preflight both paths, and stop if any input is missing,
-malformed, excluded, or inconsistent. Use only applicable approved claim IDs. Build the journey,
-message architecture, and copy; validate every channel; render every requested asset; validate the
-actual rendered files; render the MLR review; and export the content-addressed package. Return demo
-status, draft status, and every absolute path, SHA-256, size, and package digest. Do not send or
+@approved-claims.json @brand-kit
+Create an English email and 300x250 banner for US oncologists using only applicable approved claims.
+Validate both rendered files and prepare a draft package for qualified MLR review. Do not send or
 publish anything.
+
+@approved-claims.json @brand-kit
+Create an English disease-awareness poster for the UK under MHRA policy. Keep the headline
+non-promotional, include the required legal content, and prepare a reviewable PDF and MLR summary.
+
+Using explicit demo mode, create a fictional English demonstration campaign for email, banner, and
+poster. Label every output as fictional draft content, run every validation gate, and export the
+review package.
 ```
 
-The equivalent direct tool sequence is:
+## Outputs and safeguards
+
+Every promotional statement must cite an applicable approved `claim_id`. Only exact approved text
+or an exact allowed variant passes automatically; fuzzy matches cannot approve copy. Changed
+numbers, negation, off-label language, and unsupported competitive comparisons are rejected.
+Exact approved legal text and the brief's exact CTA are the uncited exceptions. Fair-balance and
+required-content checks apply independently to every claim-bearing channel.
+
+The validation fingerprint binds the brief, applicable claims, channel copy, live brand files,
+policy, templates, and capability version. A change to any bound input makes the prior validation
+stale. Rendered files have a separate validation gate, and review or export requires current passing
+pre-render and rendered-file evidence.
+
+Artifacts are written under `<store>/campaigns/<campaign_brief_id>/`. Rendered assets and review
+exports are under `outputs/`, and validation evidence is under `validation/`. The review and export
+tools return absolute paths, SHA-256 hashes, and byte sizes. The ZIP filename contains its package
+digest, and `package-manifest.json` lists relative member paths with their hashes and sizes.
+Runtime artifacts are private where POSIX permissions are available.
+
+The package is a draft review aid, not regulatory approval. The tools do not send email, traffic
+ads, publish assets, or record an authoritative external decision. Bundled claims and brand assets
+are fictional and must not be used in production.
+
+## Advanced usage
+
+To resume a campaign, provide its `campaign_brief_id`. Check `get_campaign_status` and follow its
+`next_step`; do not infer readiness from stored filenames. Rebuild the reported stage and every
+dependent gate when status reports stale, malformed, failed, or missing evidence.
+
+The direct production tool sequence is:
 
 ```text
-create_campaign_brief campaign_name="ExampleBrand evidence review" country="US"
-  policy_jurisdiction="FDA" mode="promotional" brand="ExampleBrand"
-  indication="exact approved indication" target_segment="oncologists"
-  behavioral_objective="review the approved evidence" desired_kpi=["reach"]
-  call_to_action="Learn more" call_to_action_url="https://example.test/learn"
-  channels=["email","banner","poster"] language="en" demo_mode=false
-  approved_claims_path="/absolute/path/to/approved-claims.json"
-  brand_kit_path="/absolute/path/to/brand-kit"
-  asset_dimensions={"banner":"300x250","poster":"A4"}
-
-preflight_campaign_inputs campaign_brief_id="<id>" claims_path="/absolute/path/to/approved-claims.json"
-  brand_kit_path="/absolute/path/to/brand-kit" demo_mode=false
+create_campaign_brief approved_claims_path="/absolute/path/approved-claims.json"
+  brand_kit_path="/absolute/path/brand-kit" demo_mode=false <campaign fields>
+preflight_campaign_inputs campaign_brief_id="<id>" demo_mode=false
 generate_audience_journey campaign_brief_id="<id>" journey="<JSON>"
 generate_message_architecture campaign_brief_id="<id>" messages="<JSON>"
-  fair_balance_statement="<exact approved safety statement>" fair_balance_sources="<JSON>"
-generate_channel_copy campaign_brief_id="<id>" channel="email" copy_json="<JSON>"
-generate_channel_copy campaign_brief_id="<id>" channel="banner" copy_json="<JSON>"
-generate_channel_copy campaign_brief_id="<id>" channel="poster" copy_json="<JSON>"
+  fair_balance_statement="<approved safety statement>" fair_balance_sources="<JSON>"
+generate_channel_copy campaign_brief_id="<id>" channel="<channel>" copy_json="<JSON>"
 validate_claims_and_fair_balance campaign_brief_id="<id>"
 render_email campaign_brief_id="<id>"
 render_banner campaign_brief_id="<id>"
 render_poster campaign_brief_id="<id>"
 validate_rendered_assets campaign_brief_id="<id>"
-render_mlr_review campaign_brief_id="<id>" reviewer_notes="Draft for qualified MLR review"
-export_mlr_package campaign_brief_id="<id>" destination_dir="/absolute/path/to/review-handoff"
+render_mlr_review campaign_brief_id="<id>"
+export_mlr_package campaign_brief_id="<id>" destination_dir="/absolute/path/review-handoff"
 ```
 
-## Explicit fictional demo prompt
+Repeat `generate_channel_copy` and call only the matching renderers for the channels in the brief.
+`package_mlr_submission` remains the compatibility route to the canonical review outputs and uses
+the same gates.
 
-```text
-Create a fictional ONCORIX demonstration campaign using Campaign Studio with demo_mode=true.
-Use all three channels in English. Run the full fail-closed workflow through rendered-asset
-validation and content-addressed export. Label every handoff as fictional demonstration content and
-a draft requiring qualified MLR review. Return absolute paths, hashes, sizes, and package digest.
-Do not use the result for live promotion, send it, or publish it.
-```
+Detailed references:
 
-Omit `claims_path` and `brand_kit_path` only in this explicit demo workflow. An explicit invalid path never falls back to demo data.
-
-## Validation and resume rules
-
-Promotional copy must cite applicable approved claim IDs in every non-CTA block. Exact approved legal text and the brief's exact CTA are the only uncited exceptions. Only exact approved claim text or an exact allowed variant can pass automatically; fuzzy matches cannot approve copy. Each channel must independently pass claim, fair-balance, prohibited-language, and required-content checks.
-
-Any brief, claim, brand file, policy, template, copy, or rendered-output change can invalidate a previous seal. To resume, call `get_campaign_status campaign_brief_id="<id>"` and follow its `next_step`. Do not infer readiness by inspecting stored filenames.
-
-## Compliance boundary
-
-The package is a review aid, not regulatory approval. A qualified medical/legal/regulatory reviewer must approve content before use. The bundled claims and brand kit are fictional demo data and must not be used in production. The tools do not send email, traffic ads, publish assets, or record an authoritative external decision.
-
-## Output
-
-Artifacts are written under `<store>/campaigns/<campaign_brief_id>/`; rendered assets and review exports are under `outputs/`, and validation evidence is under `validation/`. `render_mlr_review` and `export_mlr_package` return absolute paths, hashes, and sizes. The ZIP filename contains its package digest, and `package-manifest.json` lists relative member paths with SHA-256 and byte size.
-
-See the installed Skill references for the exact [input contracts](../../src/capabilities/campaign-studio/skill/references/input-contracts.md), [claim governance](../../src/capabilities/campaign-studio/skill/references/claim-governance.md), [channel specifications](../../src/capabilities/campaign-studio/skill/references/channel-specifications.md), and [output schema](../../src/capabilities/campaign-studio/skill/references/output-schema.md).
+- [Input contracts](../../src/capabilities/campaign-studio/skill/references/input-contracts.md)
+- [Claim governance](../../src/capabilities/campaign-studio/skill/references/claim-governance.md)
+- [Channel specifications](../../src/capabilities/campaign-studio/skill/references/channel-specifications.md)
+- [Output schema](../../src/capabilities/campaign-studio/skill/references/output-schema.md)
