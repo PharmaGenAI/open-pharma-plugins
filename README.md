@@ -66,21 +66,6 @@ Run the installer's **Configure** and **Verify** actions to set credentials and 
 
 See [Configuration](docs/en/configuration.md) and [Data security](docs/en/data_security.md) for settings, local data, provider calls, and compliance boundaries.
 
-## Release and deployment
-
-Capabilities release independently from reviewed commits on `main`. Prepare and verify the release metadata, then create the immutable capability tag:
-
-```bash
-uv run python scripts/tag_plugin_release.py <capability> --dry-run
-uv run python scripts/tag_plugin_release.py <capability> --push
-```
-
-The tag workflow verifies the release, builds the distribution, and creates a GitHub Release with checksums, an SBOM, and provenance. PyPI publishing is a separate protected workflow using trusted publishing.
-
-After a successful tagged release, the public website is notified with exact release metadata and handles its update through a review PR. Published tags are never moved; fixes require a new release.
-
-See the [Release guide](docs/en/releasing.md) for preparation, validation, PyPI publication, website synchronization, and recovery steps.
-
 ## Documentation
 
 - [Installation](docs/en/installation.md) · [Configuration](docs/en/configuration.md)
