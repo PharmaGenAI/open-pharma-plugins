@@ -1,5 +1,5 @@
 {
-  "distribution_version": "2.4.0",
+  "distribution_version": "2.4.1",
   "tag_format": "open-pharma-plugins-{cap}-v{version}",
   "plugins": {
     "hcp-intelligence": "1.0.2",

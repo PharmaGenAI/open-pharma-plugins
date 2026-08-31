@@ -16,7 +16,7 @@ action with that HCP's assigned representative, and export the resulting plan.
 After the NBE release has been published to PyPI, install its published version:
 
 ```bash
-pip install "open-pharma-plugins[next-best-engagement]==2.4.0"
+pip install "open-pharma-plugins[next-best-engagement]==2.4.1"
 ```
 
 For a post-publication install from an immutable release tag (only after that
