@@ -228,7 +228,7 @@ def test_campaign_studio_110_keeps_merged_distribution_and_release_metadata_alig
     mcp = json.loads((capability / ".mcp.json").read_text(encoding="utf-8"))
     tag = "open-pharma-plugins-campaign-studio-v1.1.0"
 
-    assert versions["distribution_version"] == "2.4.0"
+    assert versions["distribution_version"] == "2.4.1"
     assert marketplace["metadata"]["version"] == versions["distribution_version"]
     assert versions["plugins"]["campaign-studio"] == "1.1.0"
     assert {name: version for name, version in versions["plugins"].items() if name != "campaign-studio"} == {

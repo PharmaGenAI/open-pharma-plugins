@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Pharma commercial operations plugins — Agent Skills + MCP servers",
-    "version": "2.4.0"
+    "version": "2.4.1"
   },
   "plugins": [
     {
