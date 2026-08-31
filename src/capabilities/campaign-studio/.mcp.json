@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "open-pharma-plugins-campaign-studio": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "open-pharma-plugins[campaign-studio] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-campaign-studio-v1.1.0",
+        "open-pharma-plugins-campaign-studio"
+      ]
+    }
+  }
+}

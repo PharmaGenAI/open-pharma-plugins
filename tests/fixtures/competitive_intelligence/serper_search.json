@@ -1,0 +1,7 @@
+{
+  "_fixture_meta": {"source": "Serper documented response shape", "accessed": "2026-08-28", "sanitized": true},
+  "organic": [
+    {"title": "ExampleDrug Phase 3 update", "link": "https://news.example.test/exampledrug", "snippet": "Topline results announced.", "date": "Aug 20, 2026", "source": "Example News"},
+    {"title": "Unsafe result", "link": "javascript:alert(1)", "snippet": "Must be dropped."}
+  ]
+}

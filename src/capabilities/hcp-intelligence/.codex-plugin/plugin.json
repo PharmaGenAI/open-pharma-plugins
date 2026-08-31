@@ -1,0 +1,9 @@
+{
+  "name": "open-pharma-plugins-hcp-intelligence",
+  "version": "1.0.2",
+  "description": "HCP/HCO intelligence: evidence-backed profiles from PubMed, ClinicalTrials.gov, ORCID, NIH RePORTER, and web.",
+  "skills": [
+    "./skill"
+  ],
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>MLR review — {{ review.campaign.campaign_name }}</title>
+  <style>
+    :root {
+      --navy: #003b5c;
+      --navy-deep: #062f48;
+      --cyan: #00a3e0;
+      --orange: #e8792f;
+      --ink: #1a202c;
+      --muted: #52606d;
+      --paper: #ffffff;
+      --wash: #f4f8fa;
+      --line: #cedbe2;
+      --danger: #a4262c;
+      --success: #176b47;
+      --focus: #ffbf47;
+      --display: "Arial Narrow", "Avenir Next Condensed", Arial, sans-serif;
+      --body: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html { color: var(--ink); background: var(--wash); font-family: var(--body); line-height: 1.5; }
+    body { margin: 0; min-width: 280px; }
+    .draft-rail {
+      position: sticky; top: 0; z-index: 20; padding: .72rem 1.25rem;
+      color: #fff; background: var(--danger); border-bottom: 4px solid var(--orange);
+      text-align: center; font: 800 .78rem/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase;
+    }
+    .masthead { color: #fff; background: var(--navy); }
+    .masthead-inner, main, .footer-inner { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+    .masthead-inner { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; padding: 3.25rem 0 2.75rem 2rem; }
+    .masthead-inner::before {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--cyan);
+      box-shadow: 11px 0 0 rgba(0,163,224,.28);
+    }
+    .eyebrow { margin: 0 0 .7rem; color: #aee8ff; font: 750 .76rem/1.2 var(--body); letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 790px; font: 760 clamp(2.15rem, 5vw, 4.3rem)/.98 var(--display); letter-spacing: -.025em; }
+    .masthead-meta { align-self: end; min-width: 210px; border-left: 1px solid rgba(255,255,255,.28); padding-left: 1.25rem; }
+    .masthead-meta p { margin: .28rem 0; color: #dcebf2; font-size: .82rem; }
+    .masthead-meta strong { color: #fff; }
+    main { padding: 2rem 0 4rem; }
+    .boundary { margin: 0 0 1.6rem; padding: 1rem 1.15rem 1rem 1.4rem; background: #fff4ec; border-left: 5px solid var(--orange); font-weight: 650; }
+    .demo { margin: -.5rem 0 1.6rem; padding: .8rem 1rem; border: 1px solid var(--orange); background: #fff; color: #6b3a13; font-weight: 700; }
+    .section { margin-top: 2.1rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+    .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    h2 { margin: 0; color: var(--navy); font: 760 clamp(1.45rem, 3vw, 2.05rem)/1.1 var(--display); letter-spacing: -.01em; }
+    h3 { margin: 0 0 .8rem; color: var(--navy); font-size: 1.05rem; }
+    .utility { color: var(--muted); overflow-wrap: anywhere; font: 650 .72rem/1.35 var(--mono); letter-spacing: .03em; }
+    .overview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--paper); }
+    .datum { min-width: 0; padding: 1rem 1.05rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .datum:nth-child(4n) { border-right: 0; }
+    .datum dt { margin-bottom: .3rem; color: var(--muted); font: 750 .68rem/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; }
+    .datum dd { margin: 0; overflow-wrap: anywhere; font-weight: 650; }
+    .summary-line { display: flex; flex-wrap: wrap; gap: .5rem 1.3rem; margin: 1rem 0 0; color: var(--muted); }
+    .summary-line strong { color: var(--ink); font-family: var(--mono); }
+    .tabs { border: 1px solid var(--line); background: var(--paper); }
+    [role="tablist"] { display: flex; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--line); background: #eaf3f7; }
+    [role="tab"] {
+      appearance: none; min-width: 9rem; padding: .9rem 1.2rem; border: 0; border-right: 1px solid var(--line);
+      border-bottom: 4px solid transparent; color: var(--navy); background: transparent; cursor: pointer;
+      font: 760 .82rem/1.2 var(--body); letter-spacing: .05em; text-transform: uppercase;
+    }
+    [role="tab"][aria-selected="true"] { color: var(--ink); background: #fff; border-bottom-color: var(--orange); }
+    [role="tab"]:focus-visible, button:focus-visible { outline: 4px solid var(--focus); outline-offset: -4px; }
+    [role="tabpanel"] { padding: 1.25rem; }
+    [role="tabpanel"][hidden] { display: none; }
+    .channel-layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr); gap: 1.3rem; }
+    .channel-layout > * { min-width: 0; }
+    .evidence-block { min-width: 0; }
+    .evidence-block + .evidence-block { margin-top: 1.4rem; }
+    .preview {
+      max-height: 31rem; margin: 0; padding: 1rem; overflow: auto; color: #d8f2fc; background: var(--navy-deep);
+      border-left: 5px solid var(--cyan); white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2;
+      font: .76rem/1.55 var(--mono);
+    }
+    .copy-json { max-height: 18rem; color: #e7edf0; background: #253746; }
+    table { width: 100%; border-collapse: collapse; background: var(--paper); }
+    th, td { padding: .7rem .75rem; border: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+    th { color: var(--navy); background: #eaf3f7; font-size: .73rem; letter-spacing: .04em; text-transform: uppercase; }
+    td { font-size: .84rem; }
+    .table-wrap { overflow-x: auto; }
+    .status-pass { color: var(--success); font-weight: 800; }
+    .hash { font: .7rem/1.45 var(--mono); word-break: break-all; }
+    .spine-table tbody tr { border-left: 4px solid var(--cyan); }
+    .spine-table tbody tr:last-child { border-left-color: var(--orange); }
+    .provenance { margin: 0; padding: 1rem; overflow: auto; background: #eef4f7; border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere; font: .76rem/1.5 var(--mono); }
+    .notes { padding: 1rem 1.2rem; border-left: 5px solid var(--orange); background: #fff9f4; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .print-button { padding: .72rem 1rem; color: #fff; background: var(--navy); border: 2px solid var(--navy); cursor: pointer; font-weight: 750; }
+    .print-button:hover { color: var(--navy); background: #fff; }
+    footer { color: #dcebf2; background: var(--navy-deep); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 1rem; padding: 1.2rem 0; font-size: .75rem; }
+    @media (max-width: 850px) {
+      .masthead-inner { grid-template-columns: 1fr; }
+      .masthead-meta { border-left: 0; border-top: 1px solid rgba(255,255,255,.28); padding: 1rem 0 0; }
+      .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .datum:nth-child(4n) { border-right: 1px solid var(--line); }
+      .datum:nth-child(2n) { border-right: 0; }
+      .channel-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .masthead-inner, main, .footer-inner { width: min(100% - 1.1rem, 1180px); }
+      .masthead-inner { padding: 2rem 0 1.75rem 1.25rem; }
+      .overview { grid-template-columns: 1fr; }
+      .datum { border-right: 0 !important; }
+      [role="tab"] { min-width: 7.2rem; padding-inline: .8rem; }
+      [role="tabpanel"] { padding: .75rem; }
+      th, td { padding: .55rem; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media print {
+      @page { margin: 12mm; }
+      html, body { background: #fff; font-size: 9.5pt; }
+      .draft-rail { position: static; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .masthead { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { width: 100%; padding: 1rem 0; }
+      .print-button, [role="tablist"] { display: none !important; }
+      [role="tabpanel"], [role="tabpanel"][hidden] { display: block !important; padding: 1rem 0; break-before: page; }
+      .tabs { border: 0; }
+      .channel-layout { display: block; }
+      .evidence-block { margin-bottom: 1rem; }
+      section[aria-labelledby="claims-title"], section[aria-labelledby="provenance-title"] { break-before: page; }
+      .section-heading, h2, h3 { break-after: avoid-page; }
+      .preview, .copy-json { max-height: none; overflow: visible; color: #111; background: #f2f5f6; border-left-color: var(--cyan); white-space: pre-wrap; }
+      .table-wrap { overflow: visible; }
+      table { table-layout: fixed; }
+      th, td { font-size: 7.5pt; }
+      tr { break-inside: avoid; }
+      footer { color: #111; background: #fff; border-top: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <div class="draft-rail" role="status">Draft • Qualified MLR review required</div>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div>
+        <p class="eyebrow">Campaign evidence workspace</p>
+        <h1>{{ review.campaign.campaign_name }}</h1>
+      </div>
+      <div class="masthead-meta">
+        <p><strong>{{ review.campaign.brand }}</strong> · {{ review.campaign.indication }}</p>
+        <p>{{ review.campaign.jurisdiction }} · {{ review.campaign.workflow }}</p>
+        <p class="utility">{{ review.campaign.campaign_brief_id }}</p>
+      </div>
+    </div>
+  </header>
+  <main>
+    <p class="boundary">{{ review.draft_boundary }}</p>
+    {% if review.campaign.demo_mode %}<p class="demo">Fictional demo inputs are active. Do not use this package for live promotional work.</p>{% endif %}
+
+    <section aria-labelledby="overview-title">
+      <div class="section-heading">
+        <h2 id="overview-title">Campaign overview</h2>
+        <button class="print-button" type="button" data-print>Print review</button>
+      </div>
+      <dl class="overview">
+        <div class="datum"><dt>Audience</dt><dd>{{ review.campaign.audience }}</dd></div>
+        <div class="datum"><dt>Objective</dt><dd>{{ review.campaign.objective }}</dd></div>
+        <div class="datum"><dt>Channels</dt><dd>{{ review.campaign.channels | join(', ') }}</dd></div>
+        <div class="datum"><dt>Validation time</dt><dd>{{ review.validation_time }}</dd></div>
+        <div class="datum"><dt>Jurisdiction</dt><dd>{{ review.campaign.jurisdiction }}</dd></div>
+        <div class="datum"><dt>Policy</dt><dd>{{ review.policy.version }}</dd></div>
+        <div class="datum"><dt>Capability</dt><dd>{{ review.capability_version }}</dd></div>
+        <div class="datum"><dt>Workflow</dt><dd>{{ review.campaign.workflow }}</dd></div>
+      </dl>
+      <p class="summary-line">
+        <span><strong>{{ review.completeness.present }}/{{ review.completeness.required }}</strong> required artifacts</span>
+        <span><strong>{{ review.completeness.channels }}</strong> channels</span>
+        <span><strong>{{ review.completeness.claim_rows }}</strong> claim-source rows</span>
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="channels-title">
+      <div class="section-heading"><h2 id="channels-title">Channel evidence</h2><span class="utility">Copy → render → checks</span></div>
+      <div class="tabs">
+        <div role="tablist" aria-label="Campaign channels">
+          {% for channel in review.channels %}
+          <button id="tab-{{ channel.channel }}" role="tab" type="button" aria-selected="{{ 'true' if loop.first else 'false' }}" aria-controls="panel-{{ channel.channel }}" tabindex="{{ '0' if loop.first else '-1' }}">{{ channel.channel }}</button>
+          {% endfor %}
+        </div>
+        {% for channel in review.channels %}
+        <section id="panel-{{ channel.channel }}" role="tabpanel" aria-labelledby="tab-{{ channel.channel }}" {% if not loop.first %}hidden{% endif %}>
+          <div class="channel-layout">
+            <div>
+              <div class="evidence-block"><h3>Rendered representation</h3><p class="utility">{{ channel.preview_kind }} · {{ channel.rendered_asset.size }} bytes · {{ channel.rendered_asset.sha256 }}</p><pre class="preview">{{ channel.preview }}</pre></div>
+              <div class="evidence-block"><h3>Persisted channel copy</h3><pre class="preview copy-json">{{ channel['copy'] | tojson(indent=2) }}</pre></div>
+            </div>
+            <div>
+              <div class="evidence-block"><h3>Pre-render checks</h3><div class="table-wrap"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody>{% for check in channel.pre_render_checks %}<tr><td>{{ check.check_name }}</td><td class="status-pass">{{ check.result }}</td><td>{{ check.detail }}</td></tr>{% endfor %}</tbody></table></div></div>
+              <div class="evidence-block"><h3>Rendered checks</h3><div class="table-wrap"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody>{% for check in channel.post_render_checks %}<tr><td>{{ check.check_name }}</td><td class="status-pass">{{ check.result }}</td><td>{{ check.detail }}</td></tr>{% endfor %}</tbody></table></div></div>
+            </div>
+          </div>
+        </section>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="claims-title">
+      <div class="section-heading"><h2 id="claims-title">Claim-to-source evidence</h2><span class="utility">Full statements and references</span></div>
+      <div class="table-wrap"><table class="spine-table"><thead><tr><th>Channel</th><th>Exact copy statement</th><th>Claim</th><th>Source wording</th><th>Matched wording</th><th>Status / deviation</th><th>Source</th></tr></thead><tbody>
+      {% for row in review.claim_rows %}<tr><td>{{ row.channel }}</td><td>{{ row.statement }}</td><td class="utility">{{ row.claim_id }}</td><td>{{ row.approved_wording }}</td><td>{{ row.matched_wording }}</td><td><strong>{{ row.status }}</strong><br>{{ row.deviation }}</td><td>{{ row.source_document }}<br>{{ row.source_reference }}</td></tr>{% endfor %}
+      </tbody></table></div>
+    </section>
+
+    <section class="section" aria-labelledby="integrity-title">
+      <div class="section-heading"><h2 id="integrity-title">Artifact integrity</h2><span class="utility">Relative paths only</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Artifact</th><th>Bytes</th><th>SHA-256</th></tr></thead><tbody>{% for item in review.artifacts %}<tr><td>{{ item.path }}</td><td>{{ item.size }}</td><td class="hash">{{ item.sha256 }}</td></tr>{% endfor %}</tbody></table></div>
+    </section>
+
+    <section class="section" aria-labelledby="provenance-title">
+      <div class="section-heading"><h2 id="provenance-title">Source provenance</h2><span class="utility">Submitted and resolved paths are disclosed here only</span></div>
+      <pre class="provenance">{{ review.provenance | tojson(indent=2) }}</pre>
+      <h3 style="margin-top:1.2rem">Selected brand files</h3>
+      <div class="table-wrap"><table><thead><tr><th>File</th><th>Bytes</th><th>SHA-256</th></tr></thead><tbody>{% for item in review.brand_files %}<tr><td>{{ item.name }}</td><td>{{ item.size }}</td><td class="hash">{{ item.sha256 }}</td></tr>{% endfor %}</tbody></table></div>
+    </section>
+
+    {% if review.reviewer_notes %}<section class="section" aria-labelledby="notes-title"><h2 id="notes-title">Reviewer notes</h2><div class="notes">{{ review.reviewer_notes }}</div></section>{% endif %}
+  </main>
+  <footer><div class="footer-inner"><span>Draft review aid · qualified MLR assessment required</span><span class="utility">{{ review.campaign.campaign_brief_id }}</span></div></footer>
+  <script>
+    (() => {
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      const activate = (tab, focus = false) => {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute('aria-selected', String(selected));
+          item.tabIndex = selected ? 0 : -1;
+          document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
+        });
+        if (focus) tab.focus();
+      };
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('keydown', (event) => {
+          let next = null;
+          if (event.key === 'ArrowRight') next = tabs[(index + 1) % tabs.length];
+          if (event.key === 'ArrowLeft') next = tabs[(index - 1 + tabs.length) % tabs.length];
+          if (event.key === 'Home') next = tabs[0];
+          if (event.key === 'End') next = tabs[tabs.length - 1];
+          if (next) { event.preventDefault(); activate(next, true); }
+        });
+      });
+      document.querySelector('[data-print]').addEventListener('click', () => window.print());
+    })();
+  </script>
+</body>
+</html>

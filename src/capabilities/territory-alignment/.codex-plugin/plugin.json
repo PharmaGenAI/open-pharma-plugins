@@ -1,0 +1,9 @@
+{
+  "name": "open-pharma-plugins-territory-alignment",
+  "version": "1.2.0",
+  "description": "Territory alignment: assign HCPs to reps balancing workload, travel, disruption and coverage; plan visit routes and clusters.",
+  "skills": [
+    "./skill"
+  ],
+  "mcpServers": "./.mcp.json"
+}

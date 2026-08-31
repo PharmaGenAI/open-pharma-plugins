@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "open-pharma-plugins-next-best-engagement": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "open-pharma-plugins[next-best-engagement] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-next-best-engagement-v1.0.2",
+        "open-pharma-plugins-next-best-engagement"
+      ]
+    }
+  }
+}

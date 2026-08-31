@@ -1,0 +1,9 @@
+type,scope,value,description
+product_match,global,required,Rep must have product expertise matching HCP requirements
+account_grouping,account:A001,same_primary_rep,All HCPs in account A001 share one primary rep
+account_grouping,account:A005,same_primary_rep,All HCPs in account A005 share one primary rep
+account_grouping,account:A009,same_primary_rep,All HCPs in account A009 share one primary rep
+max_hcps_per_rep,global,18,No rep gets more than 18 HCPs
+frequency_cap,segment:high,2,Max weeks between visits for high-segment HCPs
+frequency_cap,segment:medium,4,Max weeks between visits for medium-segment HCPs
+frequency_cap,segment:low,8,Max weeks between visits for low-segment HCPs

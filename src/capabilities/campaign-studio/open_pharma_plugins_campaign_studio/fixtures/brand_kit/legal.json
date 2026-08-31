@@ -1,0 +1,21 @@
+{
+  "isi": "IMPORTANT SAFETY INFORMATION: ONCORIX can cause immune-mediated adverse reactions including pneumonitis, colitis, hepatitis, endocrinopathies, and nephritis. Monitor patients for signs and symptoms. Withhold or permanently discontinue ONCORIX based on severity. See full Prescribing Information for complete boxed warning and additional important safety information.",
+  "pi_ref": "Please see full Prescribing Information, including Boxed WARNING, at www.oncorix-hcp.example.com/pi",
+  "copyright": "© 2026 Example Pharma Inc. All rights reserved.",
+  "reporting_statement": "You are encouraged to report adverse events. Contact Example Pharma at 1-800-XXX-XXXX or FDA at 1-800-FDA-1088 or www.fda.gov/medwatch.",
+  "disclaimer": "ONCORIX is a registered trademark of Example Pharma Inc.",
+  "jurisdictions": {
+    "FDA": {
+      "required_elements": ["isi", "pi_ref", "reporting_statement"],
+      "fair_balance_required": true
+    },
+    "EMA": {
+      "required_elements": ["pi_ref", "reporting_statement"],
+      "fair_balance_required": true
+    },
+    "MHRA": {
+      "required_elements": ["pi_ref", "reporting_statement"],
+      "fair_balance_required": true
+    }
+  }
+}

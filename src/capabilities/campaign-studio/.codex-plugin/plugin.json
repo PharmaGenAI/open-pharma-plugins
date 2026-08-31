@@ -1,0 +1,9 @@
+{
+  "name": "open-pharma-plugins-campaign-studio",
+  "version": "1.1.0",
+  "description": "End-to-end pharma campaign creation: structured brief, audience journey, message architecture, channel copy, asset rendering with claim validation, and MLR review packaging.",
+  "skills": [
+    "./skill"
+  ],
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,4 @@
+{
+  "_fixture_meta": {"source": "NCBI ESearch documented response shape", "accessed": "2026-08-28", "sanitized": true},
+  "esearchresult": {"count": "2", "retmax": "2", "retstart": "0", "idlist": ["12345678", "23456789"]}
+}

@@ -1,0 +1,112 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-pharma-plugins"
+dynamic = ["version"]
+description = "Open Pharma Plugins: Agent Skills + MCP tools for pharmaceutical commercial operations — HCP intelligence, territory alignment, competitive intelligence, field training, engagement planning, and campaign creation."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Jason Zhang" }]
+keywords = ["mcp", "pharma", "commercial", "agent-skills", "hcp"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "mcp>=1.0.0,<2",
+    "anyio>=4.0,<5",
+    "pydantic>=2.8,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/PharmaGenAI/open-pharma-plugins"
+Repository = "https://github.com/PharmaGenAI/open-pharma-plugins"
+Issues = "https://github.com/PharmaGenAI/open-pharma-plugins/issues"
+
+[project.optional-dependencies]
+hcp-intelligence = ["requests>=2.31,<3"]
+hcp-intelligence-synth = ["requests>=2.31,<3", "openai>=1,<4"]
+field-training = ["pypdfium2>=4,<6", "python-pptx>=1,<2"]
+field-training-fixtures = ["pypdfium2>=4,<6", "python-pptx>=1,<2", "reportlab>=4,<6"]
+next-best-engagement = []
+territory-alignment = []
+competitive-intelligence = ["pypdfium2>=4,<6", "python-docx>=1,<2"]
+campaign-studio = ["jinja2>=3.1,<4", "pypdf>=5,<7", "reportlab>=4,<6"]
+all = [
+    "requests>=2.31,<3",
+    "openai>=1,<4",
+    "pypdfium2>=4,<6",
+    "python-pptx>=1,<2",
+    "python-docx>=1,<2",
+    "reportlab>=4,<6",
+    "jinja2>=3.1,<4",
+    "pypdf>=5,<7",
+]
+
+[dependency-groups]
+dev = [
+    "build>=1,<2",
+    "cyclonedx-bom>=7.3,<8",
+    "markdown-it-py>=4,<5",
+    "packaging>=24",
+    "pip-audit>=2.9,<3",
+    "pytest>=8,<10",
+    "ruff>=0.12,<1",
+    "tomli>=2; python_version < '3.11'",
+    "twine>=6,<7",
+    "zizmor>=1.29,<2",
+]
+
+[project.scripts]
+open-pharma-plugins-hcp-intelligence = "open_pharma_plugins_hcp_intelligence.__main__:main"
+open-pharma-plugins-hcp-batch = "open_pharma_plugins_hcp_intelligence.batch_cli:main"
+open-pharma-plugins-field-training = "open_pharma_plugins_field_training.__main__:main"
+open-pharma-plugins-campaign-studio = "open_pharma_plugins_campaign_studio.__main__:main"
+open-pharma-plugins-next-best-engagement = "open_pharma_plugins_next_best_engagement.__main__:main"
+open-pharma-plugins-territory-alignment = "open_pharma_plugins_territory_alignment.__main__:main"
+open-pharma-plugins-competitive-intelligence = "open_pharma_plugins_competitive_intelligence.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:hydra_pytest"
+markers = [
+    "reachability: opt-in checks against real external API endpoints",
+]
+
+[tool.setuptools]
+py-modules = ["mcp_framework"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+open_pharma_plugins_hcp_intelligence = "src/capabilities/hcp-intelligence/open_pharma_plugins_hcp_intelligence"
+open_pharma_plugins_field_training = "src/capabilities/field-training/open_pharma_plugins_field_training"
+open_pharma_plugins_campaign_studio = "src/capabilities/campaign-studio/open_pharma_plugins_campaign_studio"
+open_pharma_plugins_next_best_engagement = "src/capabilities/next-best-engagement/open_pharma_plugins_next_best_engagement"
+open_pharma_plugins_territory_alignment = "src/capabilities/territory-alignment/open_pharma_plugins_territory_alignment"
+open_pharma_plugins_competitive_intelligence = "src/capabilities/competitive-intelligence/open_pharma_plugins_competitive_intelligence"
+shared = "src/shared"
+
+[tool.setuptools.packages.find]
+where = ["src/capabilities/hcp-intelligence", "src/capabilities/field-training", "src/capabilities/campaign-studio", "src/capabilities/next-best-engagement", "src/capabilities/territory-alignment", "src/capabilities/competitive-intelligence", "src"]
+include = ["open_pharma_plugins*", "shared*"]
+
+[tool.setuptools.package-data]
+open_pharma_plugins_hcp_intelligence = ["fixtures/*.csv"]
+open_pharma_plugins_field_training = ["fixtures/*.pdf", "fixtures/*.pptx"]
+open_pharma_plugins_campaign_studio = ["fixtures/*.json", "fixtures/brand_kit/*", "templates/*", "policy/*"]
+open_pharma_plugins_next_best_engagement = ["fixtures/*.csv"]
+open_pharma_plugins_territory_alignment = ["fixtures/*.csv"]
+
+[tool.setuptools.dynamic]
+version = { attr = "mcp_framework.__version__" }

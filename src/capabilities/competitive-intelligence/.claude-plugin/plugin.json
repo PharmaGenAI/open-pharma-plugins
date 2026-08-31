@@ -1,0 +1,18 @@
+{
+  "name": "open-pharma-plugins-competitive-intelligence",
+  "version": "1.1.0",
+  "description": "Competitive intelligence: track competitor trial pipelines, FDA regulatory events, label changes, news, and publications with shareable briefing reports.",
+  "skills": [
+    "./skill"
+  ],
+  "mcpServers": {
+    "open-pharma-plugins-competitive-intelligence": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "open-pharma-plugins[competitive-intelligence] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-competitive-intelligence-v1.1.0",
+        "open-pharma-plugins-competitive-intelligence"
+      ]
+    }
+  }
+}

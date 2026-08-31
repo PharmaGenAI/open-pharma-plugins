@@ -1,0 +1,79 @@
+{
+  "name": "open-pharma-plugins",
+  "owner": {
+    "name": "Jason Zhang",
+    "url": "https://github.com/PharmaGenAI/open-pharma-plugins"
+  },
+  "metadata": {
+    "description": "Pharma commercial operations plugins — Agent Skills + MCP servers",
+    "version": "2.4.0"
+  },
+  "plugins": [
+    {
+      "name": "open-pharma-plugins-hcp-intelligence",
+      "version": "1.0.2",
+      "source": {
+        "source": "github",
+        "repo": "PharmaGenAI/open-pharma-plugins",
+        "path": "src/capabilities/hcp-intelligence",
+        "ref": "open-pharma-plugins-hcp-intelligence-v1.0.2"
+      },
+      "description": "HCP/HCO intelligence: build structured, evidence-backed profiles from PubMed, ClinicalTrials.gov, ORCID, NIH RePORTER, and web sources."
+    },
+    {
+      "name": "open-pharma-plugins-field-training",
+      "version": "1.1.1",
+      "source": {
+        "source": "github",
+        "repo": "PharmaGenAI/open-pharma-plugins",
+        "path": "src/capabilities/field-training",
+        "ref": "open-pharma-plugins-field-training-v1.1.1"
+      },
+      "description": "Turn approved PDF/PPTX paths into source-grounded learning packages, assessments, pre-session role-play kits, and post-session scorecards."
+    },
+    {
+      "name": "open-pharma-plugins-campaign-studio",
+      "version": "1.1.0",
+      "source": {
+        "source": "github",
+        "repo": "PharmaGenAI/open-pharma-plugins",
+        "path": "src/capabilities/campaign-studio",
+        "ref": "open-pharma-plugins-campaign-studio-v1.1.0"
+      },
+      "description": "Campaign studio: end-to-end pharma campaign creation with brief, message architecture, channel copy, and asset rendering."
+    },
+    {
+      "name": "open-pharma-plugins-next-best-engagement",
+      "version": "1.0.2",
+      "source": {
+        "source": "github",
+        "repo": "PharmaGenAI/open-pharma-plugins",
+        "path": "src/capabilities/next-best-engagement",
+        "ref": "open-pharma-plugins-next-best-engagement-v1.0.2"
+      },
+      "description": "Next-best-engagement planning: score HCPs, select actions via rule cascade, and allocate to reps with greedy optimisation."
+    },
+    {
+      "name": "open-pharma-plugins-territory-alignment",
+      "version": "1.2.0",
+      "source": {
+        "source": "github",
+        "repo": "PharmaGenAI/open-pharma-plugins",
+        "path": "src/capabilities/territory-alignment",
+        "ref": "open-pharma-plugins-territory-alignment-v1.2.0"
+      },
+      "description": "Territory alignment: assign HCPs to reps balancing workload, travel, disruption and coverage; plan visit routes and clusters; visualise on interactive maps."
+    },
+    {
+      "name": "open-pharma-plugins-competitive-intelligence",
+      "version": "1.1.0",
+      "source": {
+        "source": "github",
+        "repo": "PharmaGenAI/open-pharma-plugins",
+        "path": "src/capabilities/competitive-intelligence",
+        "ref": "open-pharma-plugins-competitive-intelligence-v1.1.0"
+      },
+      "description": "Competitive intelligence: track competitor trial pipelines, FDA regulatory events, label changes, news, and publications with shareable briefing reports."
+    }
+  ]
+}

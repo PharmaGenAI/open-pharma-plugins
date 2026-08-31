@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "open-pharma-plugins-territory-alignment": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "open-pharma-plugins[territory-alignment] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-territory-alignment-v1.2.0",
+        "open-pharma-plugins-territory-alignment"
+      ]
+    }
+  }
+}

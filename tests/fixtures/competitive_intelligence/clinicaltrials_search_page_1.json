@@ -1,0 +1,79 @@
+{
+  "_fixture_meta": {
+    "source": "ClinicalTrials.gov API v2 documented study shape",
+    "accessed": "2026-08-28",
+    "sanitized": true
+  },
+  "totalCount": 3,
+  "nextPageToken": "page-two",
+  "studies": [
+    {
+      "hasResults": true,
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT01234567",
+          "briefTitle": "Examplemab in advanced solid tumors"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING",
+          "startDateStruct": {"date": "2025-02-10", "type": "ACTUAL"},
+          "primaryCompletionDateStruct": {"date": "2027-06", "type": "ESTIMATED"},
+          "completionDateStruct": {"date": "2028-01", "type": "ESTIMATED"}
+        },
+        "sponsorCollaboratorsModule": {
+          "leadSponsor": {"name": "Example Sponsor LLC", "class": "INDUSTRY"},
+          "collaborators": [{"name": "Example Research Group", "class": "OTHER"}]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": ["PHASE3"],
+          "enrollmentInfo": {"count": 320, "type": "ESTIMATED"}
+        },
+        "conditionsModule": {"conditions": ["Solid Tumor"]},
+        "armsInterventionsModule": {
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Examplemab",
+              "description": "Investigational antibody",
+              "otherNames": ["EXM-101"]
+            },
+            {"type": "OTHER", "name": "Placebo", "description": "Matched placebo"}
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [{"measure": "Overall survival"}]
+        }
+      }
+    },
+    {
+      "hasResults": false,
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT01234568",
+          "briefTitle": "Examplemab dose optimization"
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "startDateStruct": {"date": "2023-05", "type": "ACTUAL"},
+          "completionDateStruct": {"date": "2025", "type": "ACTUAL"}
+        },
+        "sponsorCollaboratorsModule": {
+          "leadSponsor": {"name": "Example Sponsor LLC", "class": "INDUSTRY"}
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": ["PHASE2"],
+          "enrollmentInfo": {"count": 85, "type": "ACTUAL"}
+        },
+        "conditionsModule": {"conditions": ["Lung Cancer"]},
+        "armsInterventionsModule": {
+          "interventions": [{"type": "DRUG", "name": "Examplemab"}]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [{"measure": "Objective response rate"}]
+        }
+      }
+    }
+  ]
+}

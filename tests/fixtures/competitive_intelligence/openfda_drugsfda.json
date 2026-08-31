@@ -1,0 +1,36 @@
+{
+  "_fixture_meta": {
+    "source": "openFDA Drugs@FDA documented response shape",
+    "accessed": "2026-08-28",
+    "sanitized": true
+  },
+  "meta": {"results": {"skip": 0, "limit": 20, "total": 1}},
+  "results": [
+    {
+      "application_number": "BLA123456",
+      "sponsor_name": "Example Sponsor LLC",
+      "openfda": {
+        "brand_name": ["ExampleDrug"],
+        "generic_name": ["examplemab"],
+        "manufacturer_name": ["Example Manufacturing Inc"]
+      },
+      "submissions": [
+        {
+          "submission_type": "ORIG",
+          "submission_number": "1",
+          "submission_status": "AP",
+          "submission_status_date": "20250115",
+          "submission_class_code_description": "New molecular entity",
+          "review_priority": "PRIORITY"
+        },
+        {
+          "submission_type": "SUPPL",
+          "submission_number": "2",
+          "submission_status": "AP",
+          "submission_status_date": "20260320",
+          "submission_class_code_description": "Efficacy supplement"
+        }
+      ]
+    }
+  ]
+}

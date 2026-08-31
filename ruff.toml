@@ -1,0 +1,22 @@
+# Ruff config for open-pharma-plugins
+
+target-version = "py310"
+line-length = 120
+src = ["src"]
+extend-exclude = ["internal"]
+
+[lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[lint.isort]
+known-first-party = [
+    "mcp_framework",
+    "shared",
+    "open_pharma_plugins_hcp_intelligence",
+    "open_pharma_plugins_field_training",
+    "open_pharma_plugins_campaign_studio",
+    "open_pharma_plugins_next_best_engagement",
+    "open_pharma_plugins_territory_alignment",
+    "open_pharma_plugins_competitive_intelligence",
+]

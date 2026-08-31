@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ width }} {{ height }}" width="{{ width }}" height="{{ height }}" role="img">
+  <title>{{ brand }} campaign banner</title>
+  <desc>Draft for qualified MLR review</desc>
+  <rect width="{{ width }}" height="{{ height }}" fill="{{ palette.background }}"/>
+  <rect x="0" y="0" width="{{ spine_width }}" height="{{ spine_height }}" fill="{{ palette.primary }}"/>
+  {% if profile == "skyscraper" %}<rect x="0" y="{{ spine_height }}" width="{{ width }}" height="4" fill="{{ palette.secondary }}"/>
+  <rect x="{{ endpoint_y }}" y="{{ spine_height }}" width="4" height="14" fill="{{ palette.accent }}"/>{% else %}<rect x="{{ spine_width }}" y="0" width="4" height="{{ rule_height }}" fill="{{ palette.secondary }}"/>
+  <rect x="{{ spine_width }}" y="{{ endpoint_y }}" width="14" height="4" fill="{{ palette.accent }}"/>{% endif %}
+  <image x="{{ logo_x }}" y="{{ logo_y }}" width="{{ logo_width }}" height="{{ logo_height }}" href="{{ logo_data_uri }}" preserveAspectRatio="xMidYMid meet"/>
+  {% for line in headline_lines %}<text data-role="headline"{% if loop.first %} aria-label="{{ headline_full }}"{% endif %} x="{{ claim_x }}" y="{{ headline_y + loop.index0 * headline_leading }}" fill="{{ palette.primary }}" font-family="{{ typography.heading_family }}" font-size="{{ headline_size }}" font-weight="{{ typography.heading_weight }}" textLength="{{ headline_lengths[loop.index0] }}" lengthAdjust="spacing">{{ line }}</text>{% endfor %}
+  {% for line in subheadline_lines %}<text data-role="sub_headline"{% if loop.first %} aria-label="{{ subheadline_full }}"{% endif %} x="{{ claim_x }}" y="{{ subheadline_y + loop.index0 * subheadline_leading }}" fill="{{ palette.text }}" font-family="{{ typography.body_family }}" font-size="{{ subheadline_size }}" textLength="{{ subheadline_lengths[loop.index0] }}" lengthAdjust="spacing">{{ line }}</text>{% endfor %}
+  {% for line in safety_lines %}<text data-role="safety"{% if loop.first %} aria-label="{{ safety_full }}"{% endif %} x="{{ safety_x }}" y="{{ safety_y + loop.index0 * safety_leading }}" fill="{{ palette.text }}" font-family="{{ typography.body_family }}" font-size="{{ safety_size }}" textLength="{{ safety_lengths[loop.index0] }}" lengthAdjust="spacing">{{ line }}</text>{% endfor %}
+  {% for line in isi_lines %}<text data-role="legal-isi"{% if loop.first %} aria-label="{{ isi_full }}"{% endif %} x="{{ legal_x }}" y="{{ isi_y + loop.index0 * legal_leading }}" fill="{{ palette.text }}" font-family="{{ typography.body_family }}" font-size="{{ legal_size }}" textLength="{{ isi_lengths[loop.index0] }}" lengthAdjust="spacing">{{ line }}</text>{% endfor %}
+  {% for line in pi_lines %}<text data-role="legal-pi_ref"{% if loop.first %} aria-label="{{ pi_full }}"{% endif %} x="{{ legal_x }}" y="{{ pi_y + loop.index0 * legal_leading }}" fill="{{ palette.text }}" font-family="{{ typography.body_family }}" font-size="{{ legal_size }}" textLength="{{ pi_lengths[loop.index0] }}" lengthAdjust="spacing">{{ line }}</text>{% endfor %}
+  <rect x="{{ cta_x }}" y="{{ cta_y }}" width="{{ cta_width }}" height="{{ cta_height }}" fill="{{ palette.primary }}"/>
+  <text data-role="cta" x="{{ cta_x + cta_width / 2 }}" y="{{ cta_y + cta_height / 2 + cta_size * 0.34 }}" fill="{{ palette.text_light }}" font-family="{{ typography.heading_family }}" font-size="{{ cta_size }}" font-weight="bold" text-anchor="middle" textLength="{{ cta_length }}" lengthAdjust="spacing">{{ cta }}</text>
+</svg>

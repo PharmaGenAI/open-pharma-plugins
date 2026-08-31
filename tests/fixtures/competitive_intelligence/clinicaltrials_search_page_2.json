@@ -1,0 +1,38 @@
+{
+  "_fixture_meta": {
+    "source": "ClinicalTrials.gov API v2 documented study shape",
+    "accessed": "2026-08-28",
+    "sanitized": true
+  },
+  "studies": [
+    {
+      "hasResults": true,
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT01234569",
+          "briefTitle": "Example vaccine combination study"
+        },
+        "statusModule": {
+          "overallStatus": "ACTIVE_NOT_RECRUITING",
+          "startDateStruct": {"date": "2024-01-20", "type": "ACTUAL"},
+          "completionDateStruct": {"date": "2026-12-31", "type": "ESTIMATED"}
+        },
+        "sponsorCollaboratorsModule": {
+          "leadSponsor": {"name": "Example Biologics Inc", "class": "INDUSTRY"}
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": ["PHASE2"],
+          "enrollmentInfo": {"count": 140, "type": "ACTUAL"}
+        },
+        "conditionsModule": {"conditions": ["Melanoma"]},
+        "armsInterventionsModule": {
+          "interventions": [{"type": "BIOLOGICAL", "name": "Example vaccine"}]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [{"measure": "Progression-free survival"}]
+        }
+      }
+    }
+  ]
+}

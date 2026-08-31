@@ -1,0 +1,9 @@
+rep_id,name,base_lat,base_lng,product_expertise,max_weekly_hours,max_daily_calls,available_days
+R001,Alice Park,40.7580,-73.9855,product_a;product_b,40,8,mon;tue;wed;thu;fri
+R002,Bob Torres,40.6892,-73.9505,product_a;product_b,40,8,mon;tue;wed;thu;fri
+R003,Carol Wu,40.7282,-74.0431,product_a;product_b,40,8,mon;tue;wed;thu;fri
+R004,Dan Osei,40.7178,-74.0650,product_a,35,6,mon;tue;wed;thu
+R005,Elena Rossi,40.7440,-74.1690,product_a;product_b,40,8,mon;tue;wed;thu;fri
+R006,Frank Bauer,40.7580,-74.2260,product_b,40,8,mon;tue;wed;thu;fri
+R007,Grace Tanaka,40.8580,-73.8690,product_a;product_b,40,8,mon;tue;wed;thu;fri
+R008,Hank Morrison,40.8128,-73.9291,product_a;product_b,40,8,mon;tue;wed;thu;fri

@@ -1,0 +1,14 @@
+{
+  "heading_family": "Arial, Helvetica, sans-serif",
+  "body_family": "Arial, Helvetica, sans-serif",
+  "heading_weight": "bold",
+  "body_weight": "normal",
+  "sizes": {
+    "h1": "28px",
+    "h2": "22px",
+    "h3": "18px",
+    "body": "14px",
+    "small": "11px",
+    "legal": "9px"
+  }
+}

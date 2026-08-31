@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation>
+      <PMID>12345678</PMID>
+      <Article>
+        <ArticleTitle>Examplemab plus <i>standard therapy</i> in Phase 3</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND">Prior evidence was limited.</AbstractText>
+          <AbstractText Label="RESULTS">The primary endpoint was met.</AbstractText>
+        </Abstract>
+        <AuthorList>
+          <Author><LastName>Alpha</LastName><ForeName>Ada</ForeName></Author>
+          <Author><LastName>Beta</LastName><ForeName>Ben</ForeName></Author>
+          <Author><LastName>Gamma</LastName><ForeName>Gia</ForeName></Author>
+          <Author><LastName>Delta</LastName><ForeName>Dan</ForeName></Author>
+          <Author><LastName>Epsilon</LastName><ForeName>Eve</ForeName></Author>
+          <Author><LastName>Zeta</LastName><ForeName>Zed</ForeName></Author>
+        </AuthorList>
+        <Journal>
+          <Title>Journal of Example Medicine</Title>
+          <JournalIssue><PubDate><Year>2026</Year><Month>Aug</Month><Day>12</Day></PubDate></JournalIssue>
+        </Journal>
+        <ArticleDate><Year>2026</Year><Month>08</Month><Day>15</Day></ArticleDate>
+        <PublicationTypeList>
+          <PublicationType>Clinical Trial, Phase III</PublicationType>
+          <PublicationType>Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+    </MedlineCitation>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation>
+      <PMID>23456789</PMID>
+      <Article>
+        <ArticleTitle>Long-term Examplemab follow-up</ArticleTitle>
+        <Abstract><AbstractText>Follow-up remained consistent.</AbstractText></Abstract>
+        <Journal>
+          <Title>Example Oncology</Title>
+          <JournalIssue><PubDate><MedlineDate>2025 Winter</MedlineDate></PubDate></JournalIssue>
+        </Journal>
+        <PublicationTypeList><PublicationType>Journal Article</PublicationType></PublicationTypeList>
+      </Article>
+    </MedlineCitation>
+  </PubmedArticle>
+</PubmedArticleSet>

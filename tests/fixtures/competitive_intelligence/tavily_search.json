@@ -1,0 +1,4 @@
+{
+  "_fixture_meta": {"source": "Tavily documented response shape", "accessed": "2026-08-28", "sanitized": true},
+  "results": [{"title": "ExampleDrug company release", "url": "https://company.example.test/release", "content": "Company update.", "published_date": "2026-08-18"}]
+}

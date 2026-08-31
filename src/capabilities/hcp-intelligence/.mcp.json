@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "open-pharma-plugins-hcp-intelligence": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "open-pharma-plugins[hcp-intelligence] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-hcp-intelligence-v1.0.2",
+        "open-pharma-plugins-hcp-intelligence"
+      ]
+    }
+  }
+}

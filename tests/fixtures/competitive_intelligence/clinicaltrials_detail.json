@@ -1,0 +1,59 @@
+{
+  "_fixture_meta": {
+    "source": "ClinicalTrials.gov API v2 documented study shape",
+    "accessed": "2026-08-28",
+    "sanitized": true
+  },
+  "hasResults": true,
+  "protocolSection": {
+    "identificationModule": {
+      "nctId": "NCT01234567",
+      "briefTitle": "Examplemab in advanced solid tumors",
+      "officialTitle": "A Phase 3 Study of Examplemab in Advanced Solid Tumors"
+    },
+    "statusModule": {
+      "overallStatus": "RECRUITING",
+      "startDateStruct": {"date": "2025-02-10", "type": "ACTUAL"},
+      "primaryCompletionDateStruct": {"date": "2027-06", "type": "ESTIMATED"},
+      "completionDateStruct": {"date": "2028-01", "type": "ESTIMATED"}
+    },
+    "sponsorCollaboratorsModule": {
+      "leadSponsor": {"name": "Example Sponsor LLC", "class": "INDUSTRY"},
+      "collaborators": [{"name": "Example Research Group", "class": "OTHER"}]
+    },
+    "designModule": {
+      "studyType": "INTERVENTIONAL",
+      "phases": ["PHASE3"],
+      "enrollmentInfo": {"count": 320, "type": "ESTIMATED"}
+    },
+    "conditionsModule": {"conditions": ["Solid Tumor"]},
+    "armsInterventionsModule": {
+      "armGroups": [
+        {
+          "label": "Experimental",
+          "type": "EXPERIMENTAL",
+          "description": "Examplemab plus standard therapy",
+          "interventionNames": ["Examplemab 100 mg"]
+        }
+      ],
+      "interventions": [
+        {
+          "type": "DRUG",
+          "name": "Examplemab 100 mg",
+          "description": "Intravenous examplemab",
+          "otherNames": ["EXM-101"]
+        }
+      ]
+    },
+    "outcomesModule": {
+      "primaryOutcomes": [{"measure": "Overall survival"}],
+      "secondaryOutcomes": [{"measure": "Progression-free survival"}]
+    },
+    "eligibilityModule": {"eligibilityCriteria": "Adults with confirmed advanced solid tumors."},
+    "referencesModule": {"references": [{"pmid": "12345678"}]}
+  },
+  "resultsSection": {
+    "outcomeMeasuresModule": {"outcomeMeasures": [{"title": "Overall survival"}]},
+    "adverseEventsModule": {"eventGroups": []}
+  }
+}

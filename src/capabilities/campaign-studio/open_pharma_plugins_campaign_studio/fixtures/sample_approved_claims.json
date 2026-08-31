@@ -1,0 +1,132 @@
+[
+  {
+    "claim_id": "c-001",
+    "text": "ONCORIX demonstrated a median overall survival of 24.1 months versus 13.6 months with standard of care (HR 0.68; 95% CI 0.55-0.84; p<0.001).",
+    "category": "efficacy",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 1 (Primary Endpoint)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-002",
+    "text": "Overall response rate was 42.3% with ONCORIX versus 16.2% with control (p<0.001).",
+    "category": "efficacy",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 2 (Secondary Endpoints)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-003",
+    "text": "Median progression-free survival was 11.2 months with ONCORIX versus 5.8 months with control (HR 0.58; 95% CI 0.47-0.72; p<0.001).",
+    "category": "efficacy",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 2 (Secondary Endpoints)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-004",
+    "text": "Among responders, 68% maintained response at 12 months.",
+    "category": "efficacy",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Figure 3 (Duration of Response)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-005",
+    "text": "Consistent overall survival benefit was observed across pre-specified subgroups including PD-L1 status, BRAF mutation status, and prior lines of therapy.",
+    "category": "efficacy",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Figure 4 (Forest Plot)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-006",
+    "text": "Treatment-related adverse events of any grade occurred in 72.4% of patients receiving ONCORIX versus 64.8% with control.",
+    "category": "safety",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 3 (Safety Summary)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-007",
+    "text": "The most common adverse events (>=15%) with ONCORIX were fatigue (28.1%), rash (19.4%), and diarrhoea (16.7%).",
+    "category": "safety",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 3 (Safety Summary)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-008",
+    "text": "Immune-mediated adverse events occurred in 18.3% of patients, most commonly thyroid disorders (6.2%) and hepatitis (3.1%).",
+    "category": "safety",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 4 (Immune-Mediated AEs)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-009",
+    "text": "Grade 3-4 treatment-related adverse events occurred in 18.2% of ONCORIX patients versus 12.1% with control.",
+    "category": "safety",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 3 (Safety Summary)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-010",
+    "text": "Treatment discontinuation due to adverse events occurred in 8.4% of patients receiving ONCORIX.",
+    "category": "safety",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "MERIDIAN-301, Table 3 (Safety Summary)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-011",
+    "text": "ONCORIX (rivolumab) is a humanised monoclonal antibody that selectively blocks the interaction between PD-1 and its ligands PD-L1 and PD-L2, restoring T-cell-mediated anti-tumour immunity.",
+    "category": "MOA",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "SmPC Section 5.1 (Mechanism of Action)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-012",
+    "text": "The recommended dose of ONCORIX is 240 mg administered as an intravenous infusion over 30 minutes every 2 weeks.",
+    "category": "dosing",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "SmPC Section 4.2 (Posology)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  },
+  {
+    "claim_id": "c-013",
+    "text": "Treatment with ONCORIX should be continued until disease progression or unacceptable toxicity, for a maximum of 24 months.",
+    "category": "dosing",
+    "source_document": "ONCORIX Approved Product Messages 2026",
+    "source_reference": "SmPC Section 4.2 (Posology)",
+    "approval_status": "approved", "effective_from": "2026-01-01", "expiry": null,
+    "jurisdictions": ["FDA"], "indications": ["oncology"], "audiences": ["HCP"], "channels": ["email", "banner", "poster"], "allowed_variants": [],
+    "restrictions": null
+  }
+]

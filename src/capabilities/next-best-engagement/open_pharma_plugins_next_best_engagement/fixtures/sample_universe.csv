@@ -1,0 +1,81 @@
+hcp_id,hcp_name,specialty,tier,territory_id,rep_id,rep_name,rep_max_visits_per_week,consent_email,consent_phone,last_visit_date,last_email_date,last_meeting_date,visits_last_90d,emails_last_90d,kol_flag,affiliation
+HCP-E-001,Sarah Chen,Oncology,A,EAST,REP-E-01,James Rivera,20,true,true,2026-07-10,2026-08-01,,2,3,true,Memorial Cancer Center
+HCP-E-002,Michael Torres,Oncology,A,EAST,REP-E-01,James Rivera,20,true,true,2026-06-15,2026-07-20,,1,2,true,Memorial Cancer Center
+HCP-E-003,Priya Sharma,Cardiology,A,EAST,REP-E-02,Linda Park,20,true,true,,,2026-07-05,0,0,false,City Heart Institute
+HCP-E-004,David Okafor,Cardiology,A,EAST,REP-E-02,Linda Park,20,true,true,2026-08-10,2026-08-12,,3,4,true,City Heart Institute
+HCP-E-005,Rachel Kim,Oncology,B,EAST,REP-E-01,James Rivera,20,true,true,2026-07-25,2026-08-05,,2,2,false,St. Luke's Hospital
+HCP-E-006,Thomas Wright,Cardiology,B,EAST,REP-E-01,James Rivera,20,true,false,2026-06-01,,,1,0,false,Eastside Medical Group
+HCP-E-007,Amara Osei,Oncology,B,EAST,REP-E-02,Linda Park,20,true,true,2026-05-20,2026-06-30,,1,1,false,University Hospital East
+HCP-E-008,Jennifer Liu,Cardiology,B,EAST,REP-E-02,Linda Park,20,false,true,2026-07-30,,,2,0,false,Regional Cardiac Center
+HCP-E-009,Robert Patel,Oncology,B,EAST,REP-E-01,James Rivera,20,true,true,,2026-07-15,,0,1,false,Community Oncology Associates
+HCP-E-010,Fatima Al-Hassan,Cardiology,B,EAST,REP-E-02,Linda Park,20,true,true,2026-04-10,2026-05-25,,1,2,true,City Heart Institute
+HCP-E-011,Andrew Nowak,Oncology,C,EAST,REP-E-01,James Rivera,20,true,true,2026-08-05,2026-08-10,,1,1,false,St. Luke's Hospital
+HCP-E-012,Maria Santos,Cardiology,C,EAST,REP-E-01,James Rivera,20,true,true,,,,0,0,false,Eastside Medical Group
+HCP-E-013,Kevin Zhao,Oncology,C,EAST,REP-E-02,Linda Park,20,true,false,2026-06-20,,,1,0,false,Memorial Cancer Center
+HCP-E-014,Laura Becker,Cardiology,C,EAST,REP-E-02,Linda Park,20,true,true,2026-03-15,2026-07-01,,1,1,false,Regional Cardiac Center
+HCP-E-015,Hassan Yusuf,Oncology,C,EAST,REP-E-01,James Rivera,20,false,false,,,,0,0,false,Community Oncology Associates
+HCP-E-016,Emily Strand,Cardiology,C,EAST,REP-E-02,Linda Park,20,true,true,2026-07-15,,,1,0,false,City Heart Institute
+HCP-E-017,Daniel Cho,Oncology,D,EAST,REP-E-01,James Rivera,20,true,true,,2026-06-10,,0,1,false,St. Luke's Hospital
+HCP-E-018,Olivia Martin,Cardiology,D,EAST,REP-E-01,James Rivera,20,true,false,2026-05-01,,,1,0,false,Eastside Medical Group
+HCP-E-019,Raj Gupta,Oncology,D,EAST,REP-E-02,Linda Park,20,true,true,,,,0,0,false,University Hospital East
+HCP-E-020,Susan O'Neill,Cardiology,D,EAST,REP-E-02,Linda Park,20,false,true,2026-07-20,,,1,0,false,Regional Cardiac Center
+HCP-W-001,James Nakamura,Neurology,A,WEST,REP-W-01,Carlos Mendez,20,true,true,2026-06-25,2026-07-30,,2,2,true,Pacific Neuroscience Institute
+HCP-W-002,Lisa Johansson,Immunology,A,WEST,REP-W-01,Carlos Mendez,20,true,true,2026-07-05,2026-08-08,,2,3,true,West Coast Immunology Center
+HCP-W-003,Wei Zhang,Neurology,A,WEST,REP-W-02,Samantha Brooks,20,true,true,,2026-07-12,,0,1,false,Harbor Medical Center
+HCP-W-004,Patricia Reyes,Immunology,A,WEST,REP-W-02,Samantha Brooks,20,true,true,2026-08-01,2026-08-15,,3,2,true,University Hospital West
+HCP-W-005,Mark Thompson,Neurology,B,WEST,REP-W-01,Carlos Mendez,20,true,true,2026-05-10,2026-06-20,,1,1,false,Pacific Neuroscience Institute
+HCP-W-006,Anna Kowalski,Immunology,B,WEST,REP-W-01,Carlos Mendez,20,true,false,2026-07-18,,,2,0,false,Coastal Rheumatology Group
+HCP-W-007,Bryan Jackson,Neurology,B,WEST,REP-W-02,Samantha Brooks,20,true,true,,2026-05-30,,0,1,false,Harbor Medical Center
+HCP-W-008,Diana Petrova,Immunology,B,WEST,REP-W-02,Samantha Brooks,20,true,true,2026-06-30,2026-07-25,,1,2,false,West Coast Immunology Center
+HCP-W-009,George Fernandez,Neurology,B,WEST,REP-W-01,Carlos Mendez,20,false,true,2026-04-20,,,1,0,false,Valley Neuro Associates
+HCP-W-010,Helen Tran,Immunology,B,WEST,REP-W-02,Samantha Brooks,20,true,true,2026-03-25,2026-08-02,,1,3,true,University Hospital West
+HCP-W-011,Ivan Smirnov,Neurology,C,WEST,REP-W-01,Carlos Mendez,20,true,true,2026-07-28,,,1,0,false,Pacific Neuroscience Institute
+HCP-W-012,Karen Lee,Immunology,C,WEST,REP-W-01,Carlos Mendez,20,true,true,,,,0,0,false,Coastal Rheumatology Group
+HCP-W-013,Nathan Cole,Neurology,C,WEST,REP-W-02,Samantha Brooks,20,true,true,2026-06-05,2026-07-10,,1,1,false,Harbor Medical Center
+HCP-W-014,Priscilla Dubois,Immunology,C,WEST,REP-W-02,Samantha Brooks,20,true,false,2026-08-12,,,1,0,false,West Coast Immunology Center
+HCP-W-015,Oscar Herrera,Neurology,C,WEST,REP-W-01,Carlos Mendez,20,false,false,,,,0,0,false,Valley Neuro Associates
+HCP-W-016,Yuki Tanaka,Immunology,C,WEST,REP-W-02,Samantha Brooks,20,true,true,,2026-06-15,,0,1,false,University Hospital West
+HCP-W-017,Frank Bauer,Neurology,D,WEST,REP-W-01,Carlos Mendez,20,true,true,2026-05-05,,,1,0,false,Pacific Neuroscience Institute
+HCP-W-018,Gloria Vega,Immunology,D,WEST,REP-W-01,Carlos Mendez,20,true,true,,2026-07-01,,0,1,false,Coastal Rheumatology Group
+HCP-W-019,Henry Olsen,Neurology,D,WEST,REP-W-02,Samantha Brooks,20,true,false,,,,0,0,false,Harbor Medical Center
+HCP-W-020,Irene Costa,Immunology,D,WEST,REP-W-02,Samantha Brooks,20,false,true,2026-04-15,,,1,0,false,West Coast Immunology Center
+HCP-C-001,Richard Muller,Cardiology,A,CENTRAL,REP-C-01,Angela Foster,20,true,true,2026-07-08,2026-08-03,,2,2,true,Heartland Cardiovascular
+HCP-C-002,Sophia Andersen,Endocrinology,A,CENTRAL,REP-C-01,Angela Foster,20,true,true,2026-06-20,2026-07-28,,1,2,true,Central Diabetes & Endocrine Center
+HCP-C-003,Charles Obi,Cardiology,A,CENTRAL,REP-C-02,David Kim,20,true,true,,2026-07-05,,0,1,false,Midwest Heart Clinic
+HCP-C-004,Nina Volkov,Endocrinology,A,CENTRAL,REP-C-02,David Kim,20,true,true,2026-08-05,2026-08-14,,3,3,true,University Medical Center Central
+HCP-C-005,Peter Hoffman,Cardiology,B,CENTRAL,REP-C-01,Angela Foster,20,true,true,2026-05-25,2026-06-30,,1,1,false,Heartland Cardiovascular
+HCP-C-006,Aisha Nkomo,Endocrinology,B,CENTRAL,REP-C-01,Angela Foster,20,true,false,2026-07-12,,,2,0,false,Central Diabetes & Endocrine Center
+HCP-C-007,Victor Ionescu,Cardiology,B,CENTRAL,REP-C-02,David Kim,20,true,true,,2026-05-15,,0,1,false,Midwest Heart Clinic
+HCP-C-008,Stephanie Cruz,Endocrinology,B,CENTRAL,REP-C-02,David Kim,20,true,true,2026-06-28,2026-07-20,,1,2,false,Prairie Endocrine Associates
+HCP-C-009,Albert Schneider,Cardiology,B,CENTRAL,REP-C-01,Angela Foster,20,false,true,2026-04-05,,,1,0,false,Regional Heart Center
+HCP-C-010,Beatrice Adeyemi,Endocrinology,B,CENTRAL,REP-C-02,David Kim,20,true,true,2026-03-10,2026-08-01,,1,3,true,University Medical Center Central
+HCP-C-011,Carl Lindqvist,Cardiology,C,CENTRAL,REP-C-01,Angela Foster,20,true,true,2026-07-22,,,1,0,false,Heartland Cardiovascular
+HCP-C-012,Diane Washington,Endocrinology,C,CENTRAL,REP-C-01,Angela Foster,20,true,true,,,,0,0,false,Central Diabetes & Endocrine Center
+HCP-C-013,Eduardo Silva,Cardiology,C,CENTRAL,REP-C-02,David Kim,20,true,true,2026-06-10,2026-07-15,,1,1,false,Midwest Heart Clinic
+HCP-C-014,Fiona McCarthy,Endocrinology,C,CENTRAL,REP-C-02,David Kim,20,true,false,2026-08-08,,,1,0,false,Prairie Endocrine Associates
+HCP-C-015,Greg Antonov,Cardiology,C,CENTRAL,REP-C-01,Angela Foster,20,false,false,,,,0,0,false,Regional Heart Center
+HCP-C-016,Hannah Eriksson,Endocrinology,C,CENTRAL,REP-C-02,David Kim,20,true,true,,2026-06-25,,0,1,false,University Medical Center Central
+HCP-C-017,Ian Fletcher,Cardiology,D,CENTRAL,REP-C-01,Angela Foster,20,true,true,2026-05-15,,,1,0,false,Heartland Cardiovascular
+HCP-C-018,Julia Romano,Endocrinology,D,CENTRAL,REP-C-01,Angela Foster,20,true,true,,2026-07-08,,0,1,false,Central Diabetes & Endocrine Center
+HCP-C-019,Kyle Abrams,Cardiology,D,CENTRAL,REP-C-02,David Kim,20,true,true,,,,0,0,false,Midwest Heart Clinic
+HCP-C-020,Monica Dupont,Endocrinology,D,CENTRAL,REP-C-02,David Kim,20,false,true,2026-04-28,,,1,0,false,Regional Heart Center
+HCP-S-001,Antonio Morales,Oncology,A,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,2026-07-02,2026-07-28,,2,2,true,Southern Cancer Research Center
+HCP-S-002,Natalie Bergstrom,Neurology,A,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,2026-06-18,2026-08-06,,1,3,true,Gulf Coast Neuro Institute
+HCP-S-003,Philip Owusu,Oncology,A,SOUTH,REP-S-02,Marcus Johnson,20,true,true,,2026-07-10,,0,1,false,Sunbelt Medical Center
+HCP-S-004,Camille Bonnet,Neurology,A,SOUTH,REP-S-02,Marcus Johnson,20,true,true,2026-08-03,2026-08-13,,3,2,true,University Neuro Center South
+HCP-S-005,Samuel Okonkwo,Oncology,B,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,2026-05-30,2026-06-28,,1,1,false,Southern Cancer Research Center
+HCP-S-006,Teresa Ramirez,Neurology,B,SOUTH,REP-S-01,Rebecca Taylor,20,true,false,2026-07-20,,,2,0,false,Gulf Coast Neuro Institute
+HCP-S-007,Ulrich Weber,Oncology,B,SOUTH,REP-S-02,Marcus Johnson,20,true,true,,2026-05-22,,0,1,false,Sunbelt Medical Center
+HCP-S-008,Vanessa Boyd,Neurology,B,SOUTH,REP-S-02,Marcus Johnson,20,true,true,2026-06-25,2026-07-22,,1,2,false,Palmetto Neurology Practice
+HCP-S-009,William Fraser,Oncology,B,SOUTH,REP-S-01,Rebecca Taylor,20,false,true,2026-04-12,,,1,0,false,Community Cancer Clinic
+HCP-S-010,Xena Papadopoulos,Neurology,B,SOUTH,REP-S-02,Marcus Johnson,20,true,true,2026-03-20,2026-08-04,,1,3,true,University Neuro Center South
+HCP-S-011,Yosef Abadi,Oncology,C,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,2026-07-30,,,1,0,false,Southern Cancer Research Center
+HCP-S-012,Zoe Campbell,Neurology,C,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,,,,0,0,false,Gulf Coast Neuro Institute
+HCP-S-013,Adam Kowalczyk,Oncology,C,SOUTH,REP-S-02,Marcus Johnson,20,true,true,2026-06-08,2026-07-18,,1,1,false,Sunbelt Medical Center
+HCP-S-014,Bella Nguyen,Neurology,C,SOUTH,REP-S-02,Marcus Johnson,20,true,false,2026-08-10,,,1,0,false,Palmetto Neurology Practice
+HCP-S-015,Cedric Dumont,Oncology,C,SOUTH,REP-S-01,Rebecca Taylor,20,false,false,,,,0,0,false,Community Cancer Clinic
+HCP-S-016,Dina Khalil,Neurology,C,SOUTH,REP-S-02,Marcus Johnson,20,true,true,,2026-06-18,,0,1,false,University Neuro Center South
+HCP-S-017,Ethan Ross,Oncology,D,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,2026-05-08,,,1,0,false,Southern Cancer Research Center
+HCP-S-018,Freya Lindgren,Neurology,D,SOUTH,REP-S-01,Rebecca Taylor,20,true,true,,2026-07-05,,0,1,false,Gulf Coast Neuro Institute
+HCP-S-019,Gavin Murphy,Oncology,D,SOUTH,REP-S-02,Marcus Johnson,20,true,true,,,,0,0,false,Sunbelt Medical Center
+HCP-S-020,Hana Takahashi,Neurology,D,SOUTH,REP-S-02,Marcus Johnson,20,false,true,2026-04-22,,,1,0,false,Palmetto Neurology Practice

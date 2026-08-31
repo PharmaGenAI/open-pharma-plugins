@@ -1,0 +1,145 @@
+name: Publish tagged distribution to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing GitHub release tag to publish
+        required: true
+        type: string
+
+concurrency:
+  group: pypi-${{ inputs.tag }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  UV_VERSION: "0.12.1"
+
+jobs:
+  authorize:
+    name: Verify public tag authority
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Prove the tag commit is on canonical main
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          git init --quiet authority
+          cd authority
+          env -i PATH="$PATH" GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 \
+            git -c credential.helper= -c core.askPass= fetch --no-tags \
+              https://github.com/PharmaGenAI/open-pharma-plugins.git \
+              "+refs/heads/main:refs/remotes/origin/main" \
+              "+refs/tags/${RELEASE_TAG}:refs/tags/${RELEASE_TAG}"
+          tag_commit="$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
+          if ! git merge-base --is-ancestor "$tag_commit" refs/remotes/origin/main; then
+            echo "release tag is not an ancestor of canonical origin/main" >&2
+            exit 1
+          fi
+
+  verify:
+    name: Verify release assets
+    needs: authorize
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      attestations: read # verify provenance when attestations are available
+    steps:
+      - name: Check out the authorized tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: false
+
+      - name: Validate authorized tag metadata and catalog refs
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          uv sync --all-extras --dev --locked
+          uv run python scripts/check_release_tag.py "$RELEASE_TAG"
+          uv run python scripts/check_catalog_refs.py
+
+      - name: Download and verify GitHub release asset checksums
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          mkdir dist
+          gh release download "$RELEASE_TAG" --dir dist \
+            --pattern "*.whl" --pattern "*.tar.gz" \
+            --pattern "*.cdx.json" --pattern "SHA256SUMS"
+          cd dist
+          sha256sum --check SHA256SUMS
+
+      - name: Verify GitHub artifact attestations
+        if: ${{ github.event.repository.visibility != 'private' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          cd dist
+          for artifact in *.whl *.tar.gz *.cdx.json; do
+            if ! gh attestation verify "$artifact" \
+              --repo "$GITHUB_REPOSITORY" \
+              --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml" \
+              --source-ref "refs/tags/$RELEASE_TAG" \
+              --deny-self-hosted-runners; then
+              gh attestation verify "$artifact" \
+                --repo "$GITHUB_REPOSITORY" \
+                --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml" \
+                --source-ref "refs/heads/main" \
+                --deny-self-hosted-runners
+            fi
+          done
+
+      - name: Inspect and smoke-test exact artifacts
+        run: |
+          uv run twine check dist/*.whl dist/*.tar.gz
+          uv run python scripts/smoke_wheel.py dist/*.whl
+
+      - name: Upload verified release artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: verified-release-${{ inputs.tag }}
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    name: Publish verified release assets to PyPI
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/open-pharma-plugins
+    permissions:
+      actions: read # download only artifacts approved by the verify job
+      id-token: write # obtain a short-lived PyPI trusted-publishing credential
+    steps:
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: false
+
+      - name: Download verified release artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: verified-release-${{ inputs.tag }}
+          path: dist
+
+      - name: Publish with PyPI trusted publishing
+        run: uv publish dist/*.whl dist/*.tar.gz

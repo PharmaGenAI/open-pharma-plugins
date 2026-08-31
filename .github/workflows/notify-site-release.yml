@@ -1,0 +1,36 @@
+name: Notify public business site
+
+on:
+  workflow_run: # zizmor: ignore[dangerous-triggers] default-branch code validates the completed tag run
+    workflows: ["Tagged release"]
+    types: [completed]
+
+concurrency:
+  group: site-release-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    name: Dispatch reviewed release metadata
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out trusted default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Notify public business site
+        env:
+          OPEN_PHARMA_PAGES_DISPATCH_TOKEN: ${{ secrets.OPEN_PHARMA_PAGES_DISPATCH_TOKEN }}
+          RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
+          RELEASE_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          SOURCE_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: python scripts/dispatch_site_release.py

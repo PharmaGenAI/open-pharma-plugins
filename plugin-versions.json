@@ -1,0 +1,12 @@
+{
+  "distribution_version": "2.4.0",
+  "tag_format": "open-pharma-plugins-{cap}-v{version}",
+  "plugins": {
+    "hcp-intelligence": "1.0.2",
+    "field-training": "1.1.1",
+    "campaign-studio": "1.1.0",
+    "next-best-engagement": "1.0.2",
+    "territory-alignment": "1.2.0",
+    "competitive-intelligence": "1.1.0"
+  }
+}

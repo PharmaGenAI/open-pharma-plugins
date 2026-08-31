@@ -1,0 +1,18 @@
+{
+  "_fixture_meta": {
+    "source": "DailyMed v2 SPL history documented response shape",
+    "accessed": "2026-08-28",
+    "sanitized": true
+  },
+  "metadata": {"total_elements": "3"},
+  "data": {
+    "history": [
+      {"spl_version": "3", "published_date": "Sep 26, 2012"},
+      {"spl_version": "2", "published_date": "Mar 12, 2010"}
+    ],
+    "spl": {
+      "setid": "9aa7140c-012c-4ea6-866d-4732e915dab6",
+      "title": "EXAMPLE TABLET [EXAMPLE LABELER]"
+    }
+  }
+}

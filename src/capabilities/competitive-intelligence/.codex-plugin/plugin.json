@@ -1,0 +1,9 @@
+{
+  "name": "open-pharma-plugins-competitive-intelligence",
+  "version": "1.1.0",
+  "description": "Competitive intelligence: track competitor trial pipelines, FDA regulatory events, label changes, news, and publications with shareable briefing reports.",
+  "skills": [
+    "./skill"
+  ],
+  "mcpServers": "./.mcp.json"
+}

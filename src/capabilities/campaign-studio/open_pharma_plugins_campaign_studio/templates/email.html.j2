@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="{{ language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-role="subject">{{ subject }}</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: {{ palette.background_alt }}; color: {{ palette.text }}; }
+    body, table, td, a { font-family: {{ typography.body_family }}; }
+    table { border-collapse: collapse; }
+    img { border: 0; display: block; height: auto; }
+    .shell { width: 100%; background: {{ palette.background_alt }}; }
+    .canvas { width: 100%; max-width: 640px; background: {{ palette.background }}; }
+    .header { background: {{ palette.primary }}; padding: 22px 32px; }
+    .logo { width: 156px; max-width: 100%; }
+    .evidence { padding: 36px 38px 30px 46px; border-left: 4px solid {{ palette.secondary }}; position: relative; }
+    .endpoint { width: 13px; height: 4px; background: {{ palette.accent }}; margin: 0 0 20px -46px; }
+    h1 { margin: 0 0 22px; color: {{ palette.primary }}; font-family: {{ typography.heading_family }}; font-size: {{ typography.sizes.h1 }}; line-height: 1.18; }
+    p { margin: 0 0 15px; font-size: {{ typography.sizes.body }}; line-height: 1.58; }
+    .cta { display: inline-block; margin-top: 9px; padding: 13px 24px; background: {{ palette.primary }}; color: {{ palette.text_light }}; font-weight: 700; text-decoration: none; border: 2px solid {{ palette.primary }}; }
+    .cta:focus { outline: 3px solid {{ palette.accent }}; outline-offset: 3px; }
+    .safety { padding: 25px 34px; border-top: 4px solid {{ palette.safety_highlight }}; background: {{ palette.background_alt }}; }
+    .safety h2 { margin: 0 0 9px; color: {{ palette.text }}; font-size: 13px; line-height: 1.25; text-transform: uppercase; letter-spacing: .045em; }
+    .safety p { margin: 0; font-size: {{ typography.sizes.small }}; line-height: 1.48; }
+    .legal { padding: 20px 34px 25px; border-top: 1px solid {{ palette.secondary }}; color: {{ palette.text }}; }
+    .legal p { margin: 0 0 8px; font-size: {{ typography.sizes.legal }}; line-height: 1.45; }
+    .preheader { display: none; max-height: 0; overflow: hidden; opacity: 0; color: transparent; }
+    @media only screen and (max-width: 520px) {
+      .header { padding: 18px 22px; }
+      .evidence { padding: 28px 22px 24px 29px; border-left-width: 3px; }
+      .endpoint { margin-left: -29px; }
+      h1 { font-size: 24px; }
+      .cta { display: block; text-align: center; }
+      .safety, .legal { padding-left: 22px; padding-right: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preheader" data-role="preheader" aria-hidden="true" style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent">{{ preheader }}</div>
+  <table role="presentation" class="shell" width="100%">
+    <tr><td align="center">
+      <table role="presentation" class="canvas" width="100%">
+        <tr><td class="header"><img class="logo" src="{{ logo_data_uri }}" alt="{{ brand }} logo"></td></tr>
+        <tr><td class="evidence">
+          <div class="endpoint" aria-hidden="true"></div>
+          <h1 data-role="headline">{{ headline }}</h1>
+          {% for paragraph in body_paragraphs %}<p data-role="body-{{ loop.index0 }}">{{ paragraph }}</p>{% endfor %}
+          <a class="cta" data-role="cta" href="{{ cta_url }}">{{ cta }}</a>
+        </td></tr>
+        <tr><td class="safety">
+          <h2>Important Safety Information</h2>
+          <p data-role="legal-isi">{{ legal_isi }}</p>
+        </td></tr>
+        <tr><td class="legal">
+          {% for item in remaining_legal %}<p data-role="legal-{{ item.name }}">{{ item.value }}</p>{% endfor %}
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

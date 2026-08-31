@@ -1,0 +1,97 @@
+{
+  "_metadata": {
+    "version": "campaign-studio-illustrative-1.1",
+    "effective_date": "2026-08-28",
+    "status": "illustrative_engineering_policy",
+    "maintenance": "Engineering-owned illustrative controls only; qualified medical, legal, and regulatory reviewers own external legal correctness."
+  },
+  "_defaults": {
+    "channel_requirements": {
+      "email": {"required_elements": ["isi", "pi_ref", "reporting_statement"]},
+      "banner": {"required_elements": ["isi", "pi_ref"]},
+      "poster": {"required_elements": ["isi", "pi_ref", "reporting_statement"]}
+    },
+    "message_tier_counts": {
+      "primary": {"min": 1, "max": 1},
+      "secondary": {"min": 1, "max": 3},
+      "supporting": {"min": 1, "max": 5}
+    }
+  },
+  "FDA": {
+    "required_elements": ["isi", "pi_ref", "reporting_statement"],
+    "fair_balance_required": true,
+    "prohibited_patterns": [
+      {"pattern": "\\bcure[sd]?\\b", "reason": "Absolute cure claims are prohibited"},
+      {"pattern": "\\bguarantee[sd]?\\b", "reason": "Guarantee claims are prohibited"},
+      {"pattern": "\\b100%\\s+(safe|effective)\\b", "reason": "Absolute safety/efficacy claims are prohibited"},
+      {"pattern": "\\bno\\s+side\\s+effects?\\b", "reason": "Claims of no side effects are prohibited"},
+      {"pattern": "\\brisk[- ]free\\b", "reason": "Risk-free claims are prohibited"},
+      {"pattern": "\\bmiracle\\b", "reason": "Miracle claims are prohibited"}
+    ],
+    "non_promotional_prohibited": [
+      {"pattern": "\\b[A-Z][a-z]+rix\\b", "reason": "Brand names should not appear in headlines of non-promotional materials"}
+    ],
+    "min_safety_ratio": 0.3,
+    "notes": "FDA requires fair balance: safety information must be presented with comparable prominence to efficacy claims."
+  },
+  "EMA": {
+    "required_elements": ["pi_ref", "reporting_statement"],
+    "fair_balance_required": true,
+    "prohibited_patterns": [
+      {"pattern": "\\bcure[sd]?\\b", "reason": "Absolute cure claims are prohibited"},
+      {"pattern": "\\bguarantee[sd]?\\b", "reason": "Guarantee claims are prohibited"},
+      {"pattern": "\\b100%\\s+(safe|effective)\\b", "reason": "Absolute safety/efficacy claims are prohibited"},
+      {"pattern": "\\bno\\s+side\\s+effects?\\b", "reason": "Claims of no side effects are prohibited"},
+      {"pattern": "\\bbest\\s+in\\s+class\\b", "reason": "Superlative claims require substantiation"}
+    ],
+    "non_promotional_prohibited": [],
+    "min_safety_ratio": 0.3,
+    "notes": "EMA requires that promotional materials are consistent with the SmPC."
+  },
+  "MHRA": {
+    "required_elements": ["pi_ref", "reporting_statement"],
+    "fair_balance_required": true,
+    "prohibited_patterns": [
+      {"pattern": "\\bcure[sd]?\\b", "reason": "Absolute cure claims are prohibited"},
+      {"pattern": "\\bguarantee[sd]?\\b", "reason": "Guarantee claims are prohibited"},
+      {"pattern": "\\bno\\s+side\\s+effects?\\b", "reason": "Claims of no side effects are prohibited"}
+    ],
+    "non_promotional_prohibited": [],
+    "min_safety_ratio": 0.25,
+    "notes": "MHRA ABPI Code requires fair balance and accurate representation of the evidence."
+  },
+  "HSA": {
+    "required_elements": ["pi_ref"],
+    "fair_balance_required": true,
+    "prohibited_patterns": [
+      {"pattern": "\\bcure[sd]?\\b", "reason": "Absolute cure claims are prohibited"},
+      {"pattern": "\\bguarantee[sd]?\\b", "reason": "Guarantee claims are prohibited"}
+    ],
+    "non_promotional_prohibited": [],
+    "min_safety_ratio": 0.25,
+    "notes": "HSA Medicines Advertising Regulations require balanced presentation."
+  },
+  "PMDA": {
+    "required_elements": ["pi_ref"],
+    "fair_balance_required": true,
+    "prohibited_patterns": [
+      {"pattern": "\\bcure[sd]?\\b", "reason": "Absolute cure claims are prohibited"},
+      {"pattern": "\\bguarantee[sd]?\\b", "reason": "Guarantee claims are prohibited"}
+    ],
+    "non_promotional_prohibited": [],
+    "min_safety_ratio": 0.25,
+    "notes": "PMDA requires fair balance per the Pharmaceutical Affairs Law."
+  },
+  "TGA": {
+    "required_elements": ["pi_ref", "reporting_statement"],
+    "fair_balance_required": true,
+    "prohibited_patterns": [
+      {"pattern": "\\bcure[sd]?\\b", "reason": "Absolute cure claims are prohibited"},
+      {"pattern": "\\bguarantee[sd]?\\b", "reason": "Guarantee claims are prohibited"},
+      {"pattern": "\\bno\\s+side\\s+effects?\\b", "reason": "Claims of no side effects are prohibited"}
+    ],
+    "non_promotional_prohibited": [],
+    "min_safety_ratio": 0.25,
+    "notes": "TGA Therapeutic Goods Advertising Code requires fair balance."
+  }
+}

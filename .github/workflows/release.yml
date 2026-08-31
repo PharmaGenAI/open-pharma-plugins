@@ -1,0 +1,148 @@
+name: Tagged release
+
+on:
+  push:
+    tags:
+      - "open-pharma-plugins-*-v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing immutable release tag to backfill
+        required: true
+        type: string
+
+concurrency:
+  group: release-${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  UV_VERSION: "0.12.1"
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+
+jobs:
+  authorize:
+    name: Verify public tag authority
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Prove the tag commit is on canonical main
+        run: |
+          set -euo pipefail
+          git init --quiet authority
+          cd authority
+          env -i PATH="$PATH" GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 \
+            git -c credential.helper= -c core.askPass= fetch --no-tags \
+              https://github.com/PharmaGenAI/open-pharma-plugins.git \
+              "+refs/heads/main:refs/remotes/origin/main" \
+              "+refs/tags/${RELEASE_TAG}:refs/tags/${RELEASE_TAG}"
+          tag_commit="$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
+          if ! git merge-base --is-ancestor "$tag_commit" refs/remotes/origin/main; then
+            echo "release tag is not an ancestor of canonical origin/main" >&2
+            exit 1
+          fi
+
+  release:
+    name: Verify, attest, and create GitHub release
+    needs: authorize
+    runs-on: ubuntu-latest
+    environment:
+      name: github-release
+    permissions:
+      contents: write # create the immutable GitHub release and upload its assets
+      id-token: write # mint the short-lived Sigstore identity used for attestations
+      attestations: write # persist provenance and SBOM attestations in GitHub
+      artifact-metadata: write # associate attested files with GitHub artifact metadata
+    steps:
+      - name: Check out the selected tagged commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check out trusted release tools
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: release-tools
+          persist-credentials: false
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: false
+
+      - name: Validate tag and locked metadata
+        run: |
+          uv lock --check
+          uv sync --all-extras --dev --locked
+          uv run python scripts/check_release_tag.py "$RELEASE_TAG"
+          python3 release-tools/scripts/check_catalog_refs.py
+          uv run python scripts/check_manifests.py
+          uv run python scripts/gen_env_docs.py --check docs/en/configuration.md
+
+      - name: Run release gates
+        run: |
+          uv run pytest -q -m "not reachability"
+          uv run ruff format --check .
+          uv run ruff check .
+          uv run zizmor --pedantic .github/workflows
+          bash -n install.sh
+          uv run pip-audit
+
+      - name: Build, inspect, and smoke-test distributions
+        run: |
+          uv build
+          uv run twine check dist/*
+          uv run python scripts/smoke_wheel.py dist/*.whl
+
+      - name: Generate CycloneDX SBOM and checksums
+        run: |
+          uv run cyclonedx-py environment .venv \
+            --pyproject pyproject.toml \
+            --mc-type library \
+            --output-reproducible \
+            --output-file dist/open-pharma-plugins.cdx.json
+          python3 release-tools/scripts/finalize_cyclonedx_sbom.py dist/open-pharma-plugins.cdx.json --seed "$RELEASE_TAG"
+          cd dist
+          sha256sum *.whl *.tar.gz *.cdx.json > SHA256SUMS
+
+      - name: Attest build provenance
+        continue-on-error: ${{ github.event.repository.visibility == 'private' }}
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4.1.0
+        with:
+          subject-path: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/*.cdx.json
+
+      - name: Attest SBOM
+        continue-on-error: ${{ github.event.repository.visibility == 'private' }}
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4.1.0
+        with:
+          subject-path: |
+            dist/*.whl
+            dist/*.tar.gz
+          sbom-path: dist/open-pharma-plugins.cdx.json
+
+      - name: Upload release bundle to workflow run
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-${{ env.RELEASE_TAG }}
+          path: dist/
+          if-no-files-found: error
+
+      - name: Create immutable GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" dist/* --clobber
+          else
+            gh release create "$RELEASE_TAG" dist/* --verify-tag --generate-notes --title "$RELEASE_TAG"
+          fi

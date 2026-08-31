@@ -1,0 +1,4 @@
+{
+  "_fixture_meta": {"source": "Exa documented response shape", "accessed": "2026-08-28", "sanitized": true},
+  "results": [{"title": "ExampleDrug conference data", "url": "https://conference.example.test/abstract", "text": "Conference abstract.", "publishedDate": "2026-08-10", "author": "Example Conference"}]
+}

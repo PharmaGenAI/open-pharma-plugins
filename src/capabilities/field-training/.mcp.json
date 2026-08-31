@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "open-pharma-plugins-field-training": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "open-pharma-plugins[field-training] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-field-training-v1.1.1",
+        "open-pharma-plugins-field-training"
+      ]
+    }
+  }
+}

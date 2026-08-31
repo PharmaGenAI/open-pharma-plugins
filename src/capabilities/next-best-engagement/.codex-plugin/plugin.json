@@ -1,0 +1,9 @@
+{
+  "name": "open-pharma-plugins-next-best-engagement",
+  "version": "1.0.2",
+  "description": "Next-best-engagement planning: recommends which HCPs to engage, through which channel, by which rep, subject to capacity, consent, and frequency constraints.",
+  "skills": [
+    "./skill"
+  ],
+  "mcpServers": "./.mcp.json"
+}

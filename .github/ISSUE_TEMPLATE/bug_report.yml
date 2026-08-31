@@ -1,0 +1,65 @@
+name: Bug report
+description: Report a reproducible problem in Open Pharma Plugins
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Open Pharma Plugins. For security vulnerabilities, follow the [security policy](https://github.com/PharmaGenAI/open-pharma-plugins/security/policy) instead of opening a public issue.
+
+  - type: input
+    id: harness
+    attributes:
+      label: Agent harness
+      description: For example, Claude Code, Codex, or direct MCP.
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest input and sequence that consistently triggers the problem.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: capability
+    attributes:
+      label: Capability
+      options:
+        - hcp-intelligence
+        - field-training
+        - campaign-studio
+        - next-best-engagement
+        - territory-alignment
+        - competitive-intelligence
+        - installer or packaging
+        - other
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: Release, commit SHA, or installation date
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the OS, architecture, Python version, and relevant system tools.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Additional context and logs
+      description: Include relevant logs or `--check-system` output. Remove API keys, credentials, private paths, and sensitive data.
+      render: shell
