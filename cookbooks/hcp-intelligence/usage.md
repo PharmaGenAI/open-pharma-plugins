@@ -1,8 +1,9 @@
 # HCP Intelligence
 
-Search public sources for HCP/HCO evidence and persist a structured enrichment against a demo CRM account.
+Search public sources for HCP and HCO evidence, build a structured profile, and persist reviewed
+enrichment against a demo CRM account or export a batch for business review.
 
-## Tools available
+## Tools
 
 | Tool | Purpose |
 |---|---|
@@ -18,15 +19,103 @@ Search public sources for HCP/HCO evidence and persist a structured enrichment a
 | `search_hcp_web` | Search configured web providers for an HCP |
 | `search_hco_web` | Search configured web providers for an HCO |
 
-## Install and configure
+For exact schemas, check the installed Skill or MCP tool list.
+
+## Install
+
+Register the marketplace once, then install the Skill and MCP server for your agent host. If the
+marketplace is already registered, skip its `add` command and refresh it before installing a newly
+released capability.
+
+The marketplace catalog pins this capability to its current immutable release tag.
+
+### Claude Code
 
 ```bash
-pip install "open-pharma-plugins[hcp-intelligence]"
+claude plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+claude plugin install open-pharma-plugins-hcp-intelligence@open-pharma-plugins
 ```
 
-`NCBI_API_KEY` is optional. Web tools require `SERPER_API_KEY`, `TAVILY_API_KEY`, or `EXA_API_KEY`; `OPEN_PHARMA_SEARCH_BACKEND` selects the provider. Mutable enrichments default to `~/.open-pharma-plugins/hcp-intelligence` and can be moved with `OPEN_PHARMA_HCP_DATA_DIR`.
+### Codex
 
-## Example workflow
+```bash
+codex plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+codex plugin marketplace upgrade open-pharma-plugins
+codex plugin add open-pharma-plugins-hcp-intelligence@open-pharma-plugins
+```
+
+### GitHub Copilot CLI
+
+```bash
+copilot plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+copilot plugin install open-pharma-plugins-hcp-intelligence@open-pharma-plugins
+```
+
+### Python MCP server only
+
+The Python distribution installs the server without the companion Skill:
+
+```bash
+python -m pip install "open-pharma-plugins[hcp-intelligence]"
+```
+
+The guided installer, local-checkout setup, and rollback instructions are in the shared
+[installation guide](../../docs/en/installation.md).
+
+## Configure
+
+`NCBI_API_KEY` is optional. Web searches require `SERPER_API_KEY`, `TAVILY_API_KEY`, or
+`EXA_API_KEY`; `OPEN_PHARMA_SEARCH_BACKEND` selects a provider or uses the first configured provider
+in Serper, Tavily, Exa order. Mutable demo-account enrichments default to
+`~/.open-pharma-plugins/hcp-intelligence` and can be moved with `OPEN_PHARMA_HCP_DATA_DIR`.
+
+Raw public-source collection does not require a model key. Optional batch profile synthesis requires
+`OPENROUTER_API_KEY` and sends selected account fields plus gathered evidence to the configured
+OpenRouter-compatible endpoint.
+
+## Recommended workflow
+
+1. Identify the HCP or HCO with enough context to distinguish namesakes: full name, institution,
+   specialty, country, or a known identifier.
+2. Search the relevant primary public sources and use web search only where it adds missing context.
+3. Reconcile conflicts and record source URLs, access dates, identity notes, evidence gaps, and
+   confidence. A zero result is not proof that an activity does not exist.
+4. Synthesize the profile from the gathered evidence. There is no separate `build_profile` tool.
+5. Review the profile before updating a demo account or exporting batch results for business use.
+
+## Example requests
+
+```text
+Build an evidence-backed profile of Dr Sarah Chen at Example University, focusing on oncology
+publications, clinical trials, grants, guidelines, and congress activity. Flag any identity
+ambiguity or evidence gaps.
+
+@accounts.csv
+Enrich the Singapore oncology HCPs in this file and create a reviewable summary. Dry-run the exact
+scope before any provider calls and do not write results back to the demo CRM.
+
+Profile Example Cancer Centre as an HCO. Summarize its research activity, relevant trials, clinical
+focus, and public affiliations, with links and confidence notes for every section.
+```
+
+## Outputs and safeguards
+
+Single-account enrichments persist structured `profile_json` only when `update_account` is called.
+Preserve source URLs, access dates, disambiguation notes, confidence, and completeness. Public-source
+results can be incomplete, outdated, or about a namesake; verify identity before operational use.
+
+Batch runs create canonical `<id>.json` records, a stable formula-safe 27-column
+`batch_summary.csv`, and a schema-v2 `batch_manifest.json`. The manifest records input and output
+hashes, settings, counts, and account statuses. Resume reuses valid JSON and regenerates the CSV and
+manifest, so manual edits to generated outputs are not preserved. Partial, failed, or CSV-export-
+failed runs exit non-zero while preserving available evidence.
+
+The bundled account data is fictional. Follow applicable privacy, consent, access, provider-use,
+and retention requirements before processing real HCP or HCO data.
+
+## Advanced usage
+
+### Direct tool workflow
 
 ```text
 list_accounts account_type="hcp" status="pending"
@@ -37,17 +126,15 @@ search_clinical_trials investigator_name="Sarah Chen" country="US"
 search_grants pi_name="Sarah Chen" institution="Example University"
 search_congresses name="Sarah Chen" specialty="oncology"
 search_hcp_web name="Sarah Chen" institution="Example University"
-update_account account_id="HCP001" status="complete" profile_json="<evidence-backed JSON>"
+update_account account_id="HCP001" status="enriched"
+  profile_json="<evidence-backed JSON>"
 ```
 
-The agent synthesizes the profile; there is no separate `build_profile` tool. Preserve source URLs, access dates, disambiguation notes, and confidence in `profile_json`.
+### Batch enrichment from CSV
 
-## Batch enrichment from CSV
-
-For an installed plugin, share an input CSV path and output-directory path. Resolve and quote both
-paths. Preserve only the filters the user supplied: pass each requested ID as its own quoted value
-after `--ids`, and preserve supplied `--country` and `--account-type` values. The following all-filter
-example validates the batch without network or model calls:
+The packaged batch console uses the `hcp-intelligence-synth` extra when model synthesis is needed.
+Dry-run the exact input, output directory, IDs, country, and account type without network or model
+calls:
 
 ```bash
 uvx --from \
@@ -61,108 +148,43 @@ uvx --from \
   --dry-run
 ```
 
-The input file must use this header:
+The CSV must use this header:
 
 ```csv
 id,name,specialty,country,account_type,institution
 ```
 
 `id`, `name`, `country`, and `account_type` must be non-empty; `account_type` must be `HCP` or
-`HCO`. IDs must be unique and safe as file names. Keep `specialty` and `institution` columns even
-when a value is blank. The bundled
-`open_pharma_plugins_hcp_intelligence/fixtures/sample_accounts.csv` is the template.
+`HCO`. IDs must be unique and safe as filenames. Keep the optional `specialty` and `institution`
+columns even when values are blank.
 
-Compare the printed selected IDs, count, and HCP/HCO split with the requested scope. Any changed or
-omitted filter, extra or missing ID, or count/type mismatch stops execution until the command is
-corrected and a new dry run succeeds. The at-most-ten automatic proceed rule applies only after exact
-scope equality.
+Compare the printed IDs, count, and HCP/HCO split with the requested scope. Any changed or omitted
+filter, extra or missing ID, or count/type mismatch stops execution. After an exact dry run and the
+required provider approval, copy the command, remove only `--dry-run`, and add:
 
-After that gate and the required provider approval, copy the validated command, remove only
-`--dry-run`, and add the execution flags shown below. Paths and filter arguments remain identical;
-`--resume` safely supports both a new directory and continuation of an existing run:
-
-```bash
-uvx --from \
-  "open-pharma-plugins[hcp-intelligence-synth] @ git+https://github.com/PharmaGenAI/open-pharma-plugins.git@open-pharma-plugins-hcp-intelligence-v1.0.2" \
-  open-pharma-plugins-hcp-batch \
-  --input-file "/absolute/path/accounts.csv" \
-  --output-dir "/absolute/path/results" \
-  --ids "HCP-SG-001" "HCP-SG-002" \
-  --country "Singapore" \
-  --account-type "HCP" \
-  --synthesize \
-  --resume \
-  --concurrency 3
+```text
+--synthesize --resume --concurrency 3
 ```
 
-Raw public-source collection does not use an LLM or require `OPENROUTER_API_KEY`. Omit
-`--synthesize` when raw evidence is the intended output. Web search still needs an approved Serper,
-Tavily, or Exa configuration. Synthesis requires `OPENROUTER_API_KEY` and sends selected account
-fields plus gathered evidence to the configured OpenRouter endpoint.
+Omit `--synthesize` when raw evidence is the intended output. Paths alone do not authorize provider
+calls. If the user explicitly asked to process at most ten validated accounts, execution may follow
+the matching dry run; more than ten accounts requires explicit provider-call approval. User-curated
+files do not write to the bundled demo store unless `--write-back` is explicitly supplied.
 
-If the user explicitly asked to run or process at most ten validated accounts, execution may follow
-the dry run. Paths alone require confirmation; more than ten accounts require explicit provider-call
-approval, although clear advance approval in the original request need not be repeated. Monitor the
-process to exit and report completed/partial/failed/skipped counts plus the absolute output directory,
-`batch_summary.csv`, and `batch_manifest.json` paths. Never fall back to another revision if the
-pinned install fails.
+`--resume` supports both a new output directory and continuation of an existing run. Monitor the
+process through exit and report completed, partial, failed, and skipped counts plus the absolute
+output, `batch_summary.csv`, and `batch_manifest.json` paths. Never substitute another revision if
+the pinned installation fails.
 
-For deliberate source-checkout development only, use the repository wrapper:
+The default synthesis route uses OpenRouter at `https://openrouter.ai/api/v1` with the pinned
+`deepseek/deepseek-v4-flash-0731` model and high reasoning effort. The request uses the capability's
+Pydantic profile schema as a strict structured-output contract, and local Pydantic validation is the
+persistence gate. Requests have a 120-second default timeout, SDK automatic retries are disabled,
+and `--reasoning-effort xhigh` or `--synthesis-timeout-seconds` can deliberately override the
+defaults. Inspect and deliberately resume failures. `OPENROUTER_BASE_URL` or `--base-url` selects a
+different approved OpenRouter-compatible endpoint.
 
-```bash
-uv run --all-extras python scripts/batch_enrich.py \
-  --input-file src/capabilities/hcp-intelligence/open_pharma_plugins_hcp_intelligence/fixtures/sample_accounts.csv \
-  --output-dir data/hcp-intelligence \
-  --ids "HCP-SG-001" "HCP-SG-002" \
-  --country "Singapore" \
-  --account-type "HCP" \
-  --dry-run
-```
-
-After the same exact-scope gate, execute by copying that checkout command, removing `--dry-run`, and
-adding the execution flags:
-
-```bash
-uv run --all-extras python scripts/batch_enrich.py \
-  --input-file src/capabilities/hcp-intelligence/open_pharma_plugins_hcp_intelligence/fixtures/sample_accounts.csv \
-  --output-dir data/hcp-intelligence \
-  --ids "HCP-SG-001" "HCP-SG-002" \
-  --country "Singapore" \
-  --account-type "HCP" \
-  --synthesize \
-  --resume \
-  --concurrency 3
-```
-
-That script is not available in a marketplace plugin cache and is never a fallback for a failed
-pinned installed command. See the detailed
-[HCP batch guide](../../docs/en/hcp_batch.md) for the CSV schema, output safety, resume behavior,
-exit codes, and multilingual links.
-
-The default synthesis provider uses OpenRouter at `https://openrouter.ai/api/v1` with the pinned
-`deepseek/deepseek-v4-flash-0731` model. `OPENROUTER_BASE_URL` overrides the endpoint; use
-`--base-url`, `--api-key-env`, or `--model` for a deliberate per-run override. The Python `openai`
-package is the protocol-compatible client and does not require an OpenAI account or
-`OPENAI_API_KEY`. Extraction and synthesis use `high` reasoning effort by default; use
-`--reasoning-effort xhigh` for an explicit higher-effort run. Each model request has a 120-second
-timeout by default (`--synthesis-timeout-seconds` overrides it), and SDK automatic retries are
-disabled so an operator can inspect and deliberately resume a failed account. Search-provider
-settings remain independent. The request sends the capability's Pydantic profile schema as a strict
-structured-output contract and requires an OpenRouter route that supports it; local Pydantic
-validation remains the persistence gate.
-
-Each account produces canonical `<id>.json`. The stable, formula-safe 27-column
-`batch_summary.csv` is a business review projection, while schema-v2 `batch_manifest.json` records
-the input SHA-256, settings, counts, account statuses, and CSV hash. Resume reuses valid JSON and
-regenerates the CSV and manifest, so manual edits to generated outputs are not preserved. A partial,
-failed, or CSV-export-failed run exits non-zero while preserving available JSON and manifest evidence.
-
-Use `--country`, `--account-type`, or `--ids` to stage a large run. User-curated files do not write
-to the bundled demo enrichment store unless `--write-back` is explicitly supplied. Review identity
-disambiguation, sources, completeness, and every partial/failed record before commercial use. With
-`--synthesize`, the account fields and gathered evidence are sent to the configured OpenRouter-
-compatible endpoint; confirm that provider use is approved for the data before starting the run.
-
-## Data boundary
-
-The bundled account CSV is fictional demo data. Public-source results may be incomplete or refer to a namesake; verify identity before operational use and follow applicable privacy, consent, and retention requirements.
+The repository-only `scripts/batch_enrich.py` wrapper is for source-checkout development and is not
+available in a marketplace plugin cache. It is never a fallback for a failed pinned install. See the
+detailed [HCP batch guide](../../docs/en/hcp_batch.md) for filters, execution flags, output safety,
+resume behavior, exit codes, and source-checkout examples.

@@ -1,65 +1,115 @@
 # Field Training
 
-Turn one or more approved PDF/PPTX file paths into source-grounded learning packages, assessments,
-pre-session role-play kits, or post-session scorecards.
+Turn approved PDF and PPTX documents into source-grounded learning packages, assessments,
+pre-session role-play kits, and post-session scorecards.
 
-## Tools available
+## Tools
 
 | Tool | Purpose |
 |---|---|
-| `ingest_document` | Extract page/slide text into the private content store |
+| `ingest_document` | Extract page or slide text into the private content store |
 | `list_documents` | List ingested documents |
 | `search_content` | Search extracted text and speaker notes |
 | `get_document_page` | Retrieve one page or slide |
 | `render_output` | Validate and save structured JSON plus interactive, self-contained HTML |
 
-## Install and configure
+For exact schemas, check the installed Skill or MCP tool list.
+
+## Install
+
+Register the marketplace once, then install the Skill and MCP server for your agent host. If the
+marketplace is already registered, skip its `add` command and refresh it before installing a newly
+released capability.
+
+The marketplace catalog pins this capability to its current immutable release tag.
+
+### Claude Code
 
 ```bash
-pip install "open-pharma-plugins[field-training]"
+claude plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+claude plugin install open-pharma-plugins-field-training@open-pharma-plugins
 ```
 
-`OPEN_PHARMA_TRAINING_CONTENT_DIR` defaults to `~/.open-pharma-plugins/training-content`.
+### Codex
 
-## Path-first Codex workflow
+```bash
+codex plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+codex plugin marketplace upgrade open-pharma-plugins
+codex plugin add open-pharma-plugins-field-training@open-pharma-plugins
+```
 
-Users do not need to call the MCP tools themselves. Provide absolute paths and the requested output
-in one prompt:
+### GitHub Copilot CLI
+
+```bash
+copilot plugin marketplace add https://github.com/PharmaGenAI/open-pharma-plugins.git
+copilot plugin install open-pharma-plugins-field-training@open-pharma-plugins
+```
+
+### Python MCP server only
+
+The Python distribution installs the server without the companion Skill:
+
+```bash
+python -m pip install "open-pharma-plugins[field-training]"
+```
+
+The guided installer, local-checkout setup, and rollback instructions are in the shared
+[installation guide](../../docs/en/installation.md).
+
+## Configure
+
+`OPEN_PHARMA_TRAINING_CONTENT_DIR` controls the private document store and defaults to
+`~/.open-pharma-plugins/training-content`. Field Training does not require an external provider key.
+
+## Recommended workflow
+
+1. Provide the absolute paths of every approved PDF or PPTX source and name the requested training
+   output.
+2. Ingest every source before synthesis. Stop if any supplied path is missing, unreadable, or
+   unsupported.
+3. Search only the document IDs collected for this request and retrieve the supporting pages or
+   slides.
+4. Ground each claim to an exact source excerpt, include appropriate fair balance, and render the
+   final JSON and HTML.
+5. Review the draft with qualified medical, legal, and regulatory stakeholders before use.
+
+Previously ingested files are not silently mixed into a new request. Each search is restricted to
+one of the document IDs gathered for that request.
+
+## Example requests
 
 ```text
-Use @open-pharma-plugins-field-training.
+@approved-training.pdf
+Create a 20-minute learning package and a five-question assessment for the field team. Cite every
+claim to the source page and include balanced safety context.
 
-Use only these approved sources:
-- /absolute/path/approved-messages.pdf
-- /absolute/path/training-deck.pptx
+@approved-messages.pdf
+Create a pre-session role-play kit for a time-pressed community oncologist. Include objectives,
+approved messages, likely objections, facilitator prompts, and a weighted evaluation rubric.
 
-Generate a learning package named melanoma-field-dossier. Ingest every file, stop if any path
-fails, ground every claim to an exact page or slide excerpt, include fair balance, and render the
-final JSON and HTML. Report the absolute output paths.
+@training-deck.pptx
+Create a post-session scorecard that managers can use to assess message delivery, evidence use,
+and fair balance. Produce reviewable JSON and interactive HTML.
 ```
 
-For a pre-session role-play kit:
+## Outputs and safeguards
 
-```text
-Use @open-pharma-plugins-field-training.
+Valid output types are `learning_package`, `assessment`, `roleplay_kit`, and
+`roleplay_scorecard`. Files are written to `<content-dir>/outputs/` with private permissions. The
+HTML is self-contained and works offline, with source expansion, print controls, message filtering,
+assessment answer reveal, and facilitator-mode controls where applicable.
 
-Create a pre-session role-play kit from:
-- /absolute/path/approved-messages.pdf
+`render_output` rejects unknown schema fields and verifies that every `SourceReference` points to
+an ingested document, the stated page or slide, the matching filename, and an excerpt present on
+that page. A failed source path stops the request rather than producing a partial-source artifact.
 
-Persona: time-pressed community oncologist.
-Topic: efficacy with safety context.
-Output name: melanoma-roleplay-kit.
+Generated material remains a draft for qualified medical, legal, and regulatory review. It must
+not introduce off-label, unsupported, or unbalanced claims. The bundled PDF and PPTX files are
+fictional demo fixtures.
 
-Include objectives, approved messages, objections, facilitator prompts, and a weighted evaluation
-rubric totaling 100%. Render the final JSON and interactive HTML.
-```
+## Advanced usage
 
-The agent validates and ingests every supplied path before synthesis. A missing, unreadable, or
-unsupported path stops generation and is reported explicitly; the agent does not silently render a
-partial-source artifact. Each content search is restricted to one of the document IDs collected for
-that request, so previously ingested files are not silently mixed into the output.
-
-## Direct tool workflow
+The equivalent direct tool sequence is:
 
 ```text
 ingest_document file_path="/path/to/approved-messages.pdf"
@@ -71,20 +121,7 @@ render_output output_type="learning_package" content_json="<schema-valid JSON>"
   file_name="product_training"
 ```
 
-`render_output` rejects unknown schema fields and verifies that every `SourceReference` points to an ingested document, the stated page/slide, the matching filename, and an excerpt present on that page. Output is written to `<content-dir>/outputs/` with private permissions.
-
-Valid output types are `learning_package`, `assessment`, `roleplay_kit`, and
-`roleplay_scorecard`. The HTML is self-contained and works offline, with source expansion, print
-controls, message filtering, assessment answer reveal, and facilitator-mode controls where
-applicable.
-
-## HTML examples
+Fictional examples generated by the production renderer:
 
 - [Learning package example](../../src/capabilities/field-training/skill/references/examples/learning-package.html)
 - [Pre-session role-play kit example](../../src/capabilities/field-training/skill/references/examples/roleplay-kit.html)
-
-These examples use fictional bundled content and are generated from the production renderer.
-
-## Compliance boundary
-
-Use only approved source documents. Generated material remains a draft for qualified medical/legal/regulatory review; it must not introduce off-label, unsupported, or unbalanced claims. The bundled PDF and PPTX files are fictional demo fixtures.
